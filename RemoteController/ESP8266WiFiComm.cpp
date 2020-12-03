@@ -96,7 +96,7 @@ void ESP8266WiFiComm::setTargetIPAddressAlwaysToSender()
 }
 
 
-inline bool ESP8266WiFiComm::isConnected() const
+bool ESP8266WiFiComm::isConnected() const
 {
     return WiFi.status() == WL_CONNECTED;
 }
