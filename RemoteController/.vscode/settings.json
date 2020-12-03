@@ -2,6 +2,14 @@
     "files.associations": {
         "ostream": "cpp",
         "*.tcc": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "functional": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "xlocmon": "cpp",
+        "xtr1common": "cpp",
+        "array": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }
