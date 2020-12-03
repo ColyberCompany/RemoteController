@@ -5,16 +5,18 @@
  * 
  */
 
+#include "RemoteControllerSetup.h"
 
 
 void setup()
 {
-
+    setupRemoteController();
 }
 
 
 void loop()
 {
-    
+    Instance::tasker.runLoop();
+    Instance::taskPlanner.execute();
 }
 

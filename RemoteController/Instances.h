@@ -9,7 +9,10 @@
 #ifndef INSTANCES_H
 #define INSTANCES_H
 
-#include <SimpleTasker.h>
+#include <ITasker.h>
+#include <TaskPlanner.h>
+#include "Interfaces/IInputs.h"
+#include "Interfaces/IScreen.h"
 
 
 namespace Instance
@@ -17,5 +20,8 @@ namespace Instance
     using namespace Interfaces;
 
     extern ITasker& tasker;
+    extern TaskPlanner& taskPlanner;
+    extern IInputs& readings;
+    extern IScreen& screen;
 }
 
