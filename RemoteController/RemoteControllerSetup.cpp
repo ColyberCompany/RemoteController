@@ -12,6 +12,8 @@
 #include <SimpleTasker.h>
 #include <StreamComm.h>
 #include <PacketCommunicationWithQueue.h>
+#include "DroneCommunication.h"
+#include "config.h"
 
 
 using namespace Interfaces;
@@ -30,6 +32,11 @@ namespace Assemble
     InputReader inputReader(taskPlanner);
     LCD lcdScreen;
 
+    // Communication
+    ESP8266WiFiComm wifiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
+    PacketCommunicationWithQueue dronePacketComm(&wifiComm, Config::DroneCommMaxQueuedBuffers);
+    DroneCommunication droneComm;
+
     ScreenValues screenValues;
 }
 
@@ -41,6 +48,7 @@ namespace Instance
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
     IInputs& readings = Assemble::inputReader;
     IScreen& screen = Assemble::lcdScreen;
+    PacketCommunication& dronePacketComm = Assemble::dronePacketComm;
 
     ScreenValues& screenValues = Assemble::screenValues;
 }
@@ -79,8 +87,22 @@ void addTasksToTasker()
 }
 
 
+
+void addReceivedPacketEvents()
+{
+    // ...
+}
+
+void addReceivePacketsPointers()
+{
+    Instance::dronePacketComm.addReceiveDataPacketPointer(&Assemble::droneComm.steering);
+    // ...
+}
+
+
 void setupDroneComm()
 {
-    // TODO: setup comm
+    addReceivedPacketEvents();
+    addReceivePacketsPointers();
 }
 

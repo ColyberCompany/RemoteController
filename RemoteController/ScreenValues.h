@@ -22,6 +22,9 @@ struct ScreenValues
 
     bool leftSwitchState;
     bool rightSwitchState;
+
+    bool droneConnectionState;
+
     // ...
 };
 
