@@ -7,8 +7,8 @@
 
 #include "RemoteControllerSetup.h"
 #include "Instances.h"
-#include "Inputs/InputReader.h"
-#include "Screen/LCD.h"
+#include "InputReader.h"
+#include "LCD.h"
 #include <SimpleTasker.h>
 #include <StreamComm.h>
 #include <PacketCommunicationWithQueue.h>
@@ -29,6 +29,8 @@ namespace Assemble
     TaskPlanner taskPlanner(7);
     InputReader inputReader(taskPlanner);
     LCD lcdScreen;
+
+    ScreenValues screenValues;
 }
 
 
@@ -39,9 +41,19 @@ namespace Instance
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
     IInputs& readings = Assemble::inputReader;
     IScreen& screen = Assemble::lcdScreen;
+
+    ScreenValues& screenValues = Assemble::screenValues;
 }
 
 
+class TestTask : public Task
+{
+    void execute() override
+    {
+        Instance::screenValues.stickThrottle = Instance::readings.readRightSwitch();
+        Instance::screen.update(Instance::screenValues);
+    }
+};
 
 
 
@@ -52,5 +64,23 @@ void setupRemoteController()
     Instance::readings.initialize();
     Instance::screen.initialize();
     setupDroneComm();
+}
+
+
+
+
+void addTasksToTasker()
+{
+    using Instance::tasker;
+
+    // TODO: task that updates screen
+
+    tasker.addTask(new TestTask(), 5);
+}
+
+
+void setupDroneComm()
+{
+    // TODO: setup comm
 }
 

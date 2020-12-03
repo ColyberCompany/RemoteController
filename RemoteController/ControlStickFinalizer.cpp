@@ -5,7 +5,7 @@
  * 
  */
 
-#include "Inputs/ControlStickFinalizer.h"
+#include "ControlStickFinalizer.h"
 
 
 ControlStickFinalizer::ControlStickFinalizer()
@@ -38,24 +38,24 @@ int16_t ControlStickFinalizer::update(uint16_t rawReading)
     // just reverse values there
 
     // calculate the output values
-	if (outputVal > calib.rawCenterValue + outputProperties.deadZone)
+	if (outputVal > raw.center + output.deadZone)
 	{
 		outputVal = map(outputVal,
-			calib.rawCenterValue + outputProperties.deadZone,	calib.rawMaxValue,
-			outputProperties.finalCenterValue,					outputProperties.finalMaxValue	);
+			raw.center + output.deadZone, raw.max,
+			output.center, output.max);
 
-		outputVal = constrain(outputVal, outputProperties.finalCenterValue, outputProperties.finalMaxValue);
+		outputVal = constrain(outputVal, output.center, output.max);
 	}
-	else if (outputVal < calib.rawCenterValue - outputProperties.deadZone)
+	else if (outputVal < raw.center - output.deadZone)
 	{
 		outputVal = map(outputVal,
-			calib.rawMinValue,				calib.rawCenterValue - outputProperties.deadZone,
-			outputProperties.finalMinValue,	outputProperties.finalCenterValue					);
+			raw.min, raw.center - output.deadZone,
+			output.min,	output.center);
 
-		outputVal = constrain(outputVal, outputProperties.finalMinValue, outputProperties.finalCenterValue);
+		outputVal = constrain(outputVal, output.min, output.center);
 	}
 	else
-		outputVal = outputProperties.finalCenterValue;
+		outputVal = output.center;
 
     return outputVal;
 }

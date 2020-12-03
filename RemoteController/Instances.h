@@ -11,8 +11,8 @@
 
 #include <ITasker.h>
 #include <TaskPlanner.h>
-#include "Interfaces/IInputs.h"
-#include "Interfaces/IScreen.h"
+#include "IInputs.h"
+#include "IScreen.h"
 
 
 namespace Instance
@@ -23,6 +23,8 @@ namespace Instance
     extern TaskPlanner& taskPlanner;
     extern IInputs& readings;
     extern IScreen& screen;
+
+    extern ScreenValues& screenValues;
 }
 
 

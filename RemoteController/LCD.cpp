@@ -5,7 +5,7 @@
  * 
  */
 
-#include "Screen/LCD.h"
+#include "LCD.h"
 
 
 LCD::LCD()
@@ -31,7 +31,7 @@ bool LCD::initialize()
 	lcd.print("Colyber");
 	lcd.setCursor(0, 1);
 	lcd.print("RemoteController");
-	delay(300);
+	delay(400);
 	lcd.clear();
 
     updateLinesWithStaticParts();
@@ -40,7 +40,7 @@ bool LCD::initialize()
 
 void LCD::update(const ScreenValues& newValues)
 {
-    updateLinesWithNewValues();
+    updateLinesWithNewValues(newValues);
     printLines();
 }
 
@@ -51,9 +51,10 @@ void LCD::updateLinesWithStaticParts()
 }
 
 
-void LCD::updateLinesWithNewValues()
+void LCD::updateLinesWithNewValues(const ScreenValues& newValues)
 {
-
+    lcd.clear();
+    lcd.print(newValues.stickThrottle);
 }
 
 

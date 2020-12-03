@@ -9,12 +9,16 @@
 #ifndef LCD_H
 #define LCD_H
 
-#include "Interfaces/IScreen.h"
+#ifdef ARDUINO
+    #include "Arduino.h"
+#endif
+
+#include "IScreen.h"
 #include "Arduino.h"
 #include <LiquidCrystal_I2C.h>
 
 
-class LCD : public IScreen
+class LCD : public Interfaces::IScreen
 {
 private:
     LiquidCrystal_I2C lcd;
@@ -33,7 +37,7 @@ public:
 
 private:
     void updateLinesWithStaticParts();
-    void updateLinesWithNewValues();
+    void updateLinesWithNewValues(const ScreenValues& newValues);
     void printLines();
 
 

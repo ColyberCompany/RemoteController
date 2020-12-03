@@ -9,7 +9,7 @@
 #ifndef IINPUTS_H
 #define IINPUTS_H
 
-#include "Common/ControlSticks.h"
+#include "ControlSticks.h"
 
 
 namespace Interfaces

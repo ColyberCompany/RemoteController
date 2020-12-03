@@ -12,6 +12,10 @@
 
 #include "EVAFilter.h"
 
+#ifdef ARDUINO
+    #include "Arduino.h"
+#endif
+
 
 class ControlStickFinalizer
 {

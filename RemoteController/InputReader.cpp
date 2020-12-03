@@ -5,7 +5,7 @@
  * 
  */
 
-#include "Inputs/InputReader.h"
+#include "InputReader.h"
 #include "config.h"
 
 

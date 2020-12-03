@@ -9,7 +9,7 @@
 #ifndef ISCREEN_H
 #define ISCREEN_H
 
-#include "Common/ScreenValues.h"
+#include "ScreenValues.h"
 
 
 namespace Interfaces

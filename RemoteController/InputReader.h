@@ -10,15 +10,15 @@
 #ifndef INPUTREADER_H
 #define INPUTREADER_H
 
-#include "Interfaces/IInputs.h"
+#include "IInputs.h"
 #include <TaskPlanner.h>
 #include <Task.h>
-#include "ExtLibs/ADS1115.h"
+#include "ADS1115.h"
 #include "ControlStickFinalizer.h"
 
 
 class InputReader : public Interfaces::IInputs, protected Task
-{
+{   
 private:
     TaskPlanner& taskPlanner;
     ADS1115 ads1115;
