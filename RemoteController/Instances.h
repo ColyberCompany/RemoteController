@@ -25,3 +25,6 @@ namespace Instance
     extern IScreen& screen;
 }
 
+
+#endif
+
