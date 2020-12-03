@@ -13,6 +13,7 @@
 #include <StreamComm.h>
 #include <PacketCommunicationWithQueue.h>
 #include "DroneCommunication.h"
+#include "ESP8266WiFiComm.h"
 #include "config.h"
 
 
@@ -81,6 +82,7 @@ void addTasksToTasker()
 {
     using Instance::tasker;
 
+    tasker.addTask(&Assemble::dronePacketComm, 220);
     // TODO: task that updates screen
 
     tasker.addTask(new TestTask(), 5);
@@ -102,6 +104,7 @@ void addReceivePacketsPointers()
 
 void setupDroneComm()
 {
+    Assemble::wifiComm.begin();
     addReceivedPacketEvents();
     addReceivePacketsPointers();
 }
