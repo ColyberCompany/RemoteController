@@ -13,7 +13,8 @@
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\FilteringLibraries",
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\Tasker",
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\SimpleDataStructures",
-                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\PacketCommunication"
+                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\PacketCommunication",
+                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\ADS1115"
             ],
             "forcedInclude": [
                 "C:\\Users\\janwi\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.7.4\\cores\\esp8266\\Arduino.h"

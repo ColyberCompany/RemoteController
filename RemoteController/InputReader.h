@@ -13,7 +13,7 @@
 #include "IInputs.h"
 #include <TaskPlanner.h>
 #include <Task.h>
-#include "ADS1115.h"
+#include <ADS1115.h>
 #include "ControlStickFinalizer.h"
 
 
