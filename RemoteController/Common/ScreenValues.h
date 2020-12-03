@@ -12,8 +12,16 @@
 
 struct ScreenValues
 {
-    uint8_t pitch;
-    uint8_t roll;
+    uint8_t dronePitch;
+    uint8_t droneRoll;
+
+    uint16_t stickThrottle;
+    int16_t stickYaw;
+    int16_t stickPitch;
+    int16_t stickRoll;
+
+    bool leftSwitchState;
+    bool rightSwitchState;
     // ...
 };
 
