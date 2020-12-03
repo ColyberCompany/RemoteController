@@ -12,14 +12,17 @@
 #include "Common/ScreenValues.h"
 
 
-class IScreen
+namespace Interfaces
 {
-public:
-    ~IScreen() {}
+    class IScreen
+    {
+    public:
+        ~IScreen() {}
 
-    virtual bool initialize() = 0;
-    virtual void update(const ScreenValues& newValues) = 0;
-};
+        virtual bool initialize() = 0;
+        virtual void update(const ScreenValues& newValues) = 0;
+    };
+}
 
 
 #endif
