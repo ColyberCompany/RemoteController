@@ -10,14 +10,14 @@
 #ifndef INPUTREADER_H
 #define INPUTREADER_H
 
-#include "IInputs.h"
 #include <TaskPlanner.h>
 #include <Task.h>
 #include <ADS1115.h>
+#include "ControlSticks.h"
 #include "ControlStickFinalizer.h"
 
 
-class InputReader : public Interfaces::IInputs, protected Task
+class InputReader : protected Task
 {   
 private:
     TaskPlanner& taskPlanner;
@@ -41,10 +41,10 @@ public:
      * @brief Call Wire.begin() before. Initialize everything.
      * @return true if everything went well, false otherwise.
      */
-    bool initialize() override;
-    ControlSticks readControlSticksValues() override;
-    bool readLeftSwitch() override;
-    bool readRightSwitch() override;
+    bool initialize();
+    ControlSticks readControlSticksValues();
+    bool readLeftSwitch();
+    bool readRightSwitch();
 
 protected:
     /**

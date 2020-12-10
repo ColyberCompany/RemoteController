@@ -47,7 +47,7 @@ namespace Instance
 {
     ITasker& tasker = Assemble::tasker;
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
-    IInputs& readings = Assemble::inputReader;
+    InputReader& readings = Assemble::inputReader;
     IScreen& screen = Assemble::lcdScreen;
     PacketCommunication& dronePacketComm = Assemble::dronePacketComm;
 
@@ -59,7 +59,8 @@ class TestTask : public Task
 {
     void execute() override
     {
-        Instance::screenValues.stickThrottle = Instance::readings.readRightSwitch();
+        //Instance::screenValues.stickThrottle = Instance::readings.readRightSwitch();
+        Instance::screenValues.stickThrottle = Assemble::wifiComm.isConnected();
         Instance::screen.update(Instance::screenValues);
     }
 };

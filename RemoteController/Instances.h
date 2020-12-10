@@ -11,7 +11,7 @@
 
 #include <ITasker.h>
 #include <TaskPlanner.h>
-#include "IInputs.h"
+#include "InputReader.h"
 #include "IScreen.h"
 #include <PacketCommunication.h>
 
@@ -22,7 +22,7 @@ namespace Instance
 
     extern ITasker& tasker;
     extern TaskPlanner& taskPlanner;
-    extern IInputs& readings;
+    extern InputReader& readings;
     extern IScreen& screen;
     extern PacketCommunication& dronePacketComm;
 
