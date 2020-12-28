@@ -22,6 +22,7 @@
 
 namespace Config
 {
+    const uint8_t MaxSimpleTaskerTasks = 15;
 
     const size_t DroneCommMaxBufferSize = 40;
     const size_t DroneCommMaxQueuedBuffers = 30;
