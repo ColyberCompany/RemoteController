@@ -2,7 +2,7 @@
  * @file RemoteControllerSetup.h
  * @author Jan Wielgus
  * @brief Putting everything together.
- * @date 2020-12-03
+ * @date 2020-12-28
  * 
  */
 
@@ -16,4 +16,3 @@ void setupRemoteController();
 
 
 #endif
-
