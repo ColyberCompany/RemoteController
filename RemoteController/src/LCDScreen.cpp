@@ -13,9 +13,12 @@ LCDScreen::LCDScreen()
 {
     for (int i=0; i < Cols; i++)
     {
-        line1[i] = ' ';
-        line2[i] = ' ';
+        line1[i] = 'a';
+        line2[i] = 'a';
     }
+
+    line1[Cols] = '\n';
+    line2[Cols] = '\n';
 }
 
 

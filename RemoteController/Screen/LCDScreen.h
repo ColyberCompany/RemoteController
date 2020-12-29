@@ -23,8 +23,8 @@ private:
     static const uint8_t Rows = 2;
     static const uint8_t Cols = 16;
 
-    char line1[Cols];
-    char line2[Cols];
+    char line1[Cols + 1];
+    char line2[Cols + 1];
 
 public:
     LCDScreen();
