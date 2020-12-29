@@ -48,11 +48,23 @@ private:
     void printLines();
 
     /**
+     * @param number Any number.
+     * @return Last decimal digit of passed number.
+     */
+    uint8_t getLastDigit(int number);
+
+    /**
+     * @param number Checked number.
+     * @return How many digits this number has in decimal form.
+     */
+    uint8_t getDigitsAmount(int number);
+
+    /**
      * @brief Update charArray with value (as text).
      * If alignLeft is true - first digit will be on position index, next digits on next indexes.
-     * If alignRight is false - whole value (as text) will be placed that last digit will be on
+     * If alignLeft is false - whole value (as text) will be placed that last digit will be on
      * position index (previous digits will be on previous indexes).
-     * @param charArray String as char array.
+     * @param charArray C style string.
      * @param position Index in array (placement depends on this and alignment parameter).
      * @param value Value to be placed in the char array.
      * @param alignLeft Boolean value. Check brief.
@@ -60,13 +72,22 @@ private:
     void updateCharArray(char* charArray, size_t position, int value, bool alignLeft = true);
 
     /**
-     * @brief 
-     * 
-     * @param charArray 
-     * @param position 
-     * @param character 
+     * @brief Update charArray with one char (simply replace char at position).
+     * @param charArray C style string.
+     * @param position Index of replaced char in string.
+     * @param character Character to replace.
      */
     void updateCharArray(char* charArray, size_t position, char character);
+
+    /**
+     * @brief Update charArray with whole C style string starting from position index.
+     * @param charArray C style string.
+     * @param position Index from where text will start in the char array
+     * (remember that text have to be not too long).
+     * @param text Text to be put to the charArray starting from position index
+     * (have to end with '\n').
+     */
+    void updateCharArray(char* charArray, size_t position, const char* text);
 
     /**
      * @brief Change signed value for one char that resemble the value.

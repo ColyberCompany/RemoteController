@@ -67,6 +67,55 @@ void LCDScreen::printLines()
 }
 
 
+uint8_t LCDScreen::getLastDigit(int number)
+{
+    return abs(number) % 10;
+}
+
+
+uint8_t LCDScreen::getDigitsAmount(int number)
+{
+    uint8_t digitsCounter = 1;
+    while (number != 0)
+    {
+        digitsCounter++;
+        number /= 10;
+    }
+    return digitsCounter;
+}
+
+
+void LCDScreen::updateCharArray(char* charArray, size_t position, int value, bool alignLeft = true)
+{
+    if (alignLeft)
+        updateCharArray(charArray, position + getDigitsAmount(value), value, false);
+    else
+    {
+        int temp = value; // TODO: figure out better name
+        int index = position;
+        do
+        {
+            charArray[index] = getLastDigit(temp) + '0';
+            temp / 10;
+            index--;
+        } while (temp != 0);
+    }
+}
+
+
+void LCDScreen::updateCharArray(char* charArray, size_t position, char character)
+{
+    charArray[position] = character;
+}
+
+
+void LCDScreen::updateCharArray(char* charArray, size_t position, const char* text)
+{
+    for (size_t i = 0; text[i] != '\n'; i++)
+        charArray[position + i] = text[i];
+}
+
+
 char LCDScreen::stickValToSymbolHorizontal(int16_t value)
 {
     if (value > 0)
