@@ -9,7 +9,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "Common/ScreenData.h"
+#include "../Common/ScreenData.h"
 
 
 namespace Interfaces

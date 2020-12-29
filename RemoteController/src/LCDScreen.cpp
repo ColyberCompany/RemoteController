@@ -5,9 +5,9 @@
  * 
  */
 
-#include "Screen/LCDScreen.h"
+#include "../Screen/LCDScreen.h"
 
-
+ 
 LCDScreen::LCDScreen()
     : lcd(LCD_ADDRESS, Cols, Rows)
 {

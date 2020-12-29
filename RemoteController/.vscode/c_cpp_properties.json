@@ -3,11 +3,11 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\janwi\\Documents\\GitHub\\ColyberCompany\\RemoteController\\RemoteController\\**",
                 "C:\\Users\\janwi\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\**",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\**",
                 "C:\\Users\\janwi\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.7.4\\**",
-                "C:\\Users\\janwi\\Documents\\GitHub\\ColyberCompany\\RemoteController\\RemoteController",
 
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\LiquidCrystal_I2C\\**",
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\Tasker\\**"

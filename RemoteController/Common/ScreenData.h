@@ -9,6 +9,10 @@
 #ifndef SCREENDATA_H
 #define SCREENDATA_H
 
+#ifdef ARDUINO
+    #include <arduino.h>
+#endif
+
 
 struct ScreenData
 {

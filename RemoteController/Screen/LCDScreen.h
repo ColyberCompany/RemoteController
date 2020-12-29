@@ -10,7 +10,7 @@
 #ifndef LCDSCREEN_H
 #define LCDSCREEN_H
 
-#include "Interfaces/Screen.h"
+#include "../Interfaces/Screen.h"
 #include <LiquidCrystal_I2C.h>
 #include <Task.h>
 
