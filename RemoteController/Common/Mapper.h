@@ -23,6 +23,12 @@ class Mapper
     T outMax;
 
 public:
+    Mapper()
+    {
+        inMin = outMin = 0;
+        inMax = outMax = 1;
+    }
+
     Mapper(T inputMin, T inputMax, T outputMin, T outputMax)
     {
         setInputRange(inputMin, inputMax);
@@ -45,6 +51,26 @@ public:
     {
         // Formula from: https://www.arduino.cc/reference/en/language/functions/math/map/
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    T getInputMin()
+    {
+        return inMin;
+    }
+
+    T getInputMax()
+    {
+        return inMax;
+    }
+
+    T getOutputMin()
+    {
+        return outMin;
+    }
+
+    T getOutputMax()
+    {
+        return outMax;
     }
 };
 
