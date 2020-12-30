@@ -23,8 +23,8 @@ class AnalogToControlStick
 {
     Mapper<int16_t> leftMapper; // Maps values between min and center
     Mapper<int16_t> rightMapper; // Maps values between center and max
-    uint16_t inMid;
-    uint16_t inMidOffset;
+    //uint16_t inMid;
+    //uint16_t inMidOffset;
     int16_t outMid;
 
 public:
@@ -69,15 +69,29 @@ public:
             leftMapper.setInputRange(inMin, inMid + inMidOffset);
             rightMapper.setInputRange(inMid - inMidOffset, inMax);
         }
-
-        this->inMid = inMid;
-        this->inMidOffset = inMidOffset;
     }
 
 
     int16_t convert(uint16_t rawAnalog)
     {
-        
+        if (leftMapper.getInputMin() < rightMapper.getInputMax())
+        {
+            if (rawAnalog <= leftMapper.getInputMax())
+                return leftMapper.map(rawAnalog);
+            else if (rawAnalog >= rightMapper.getInputMin())
+                return rightMapper.map(rawAnalog);
+            else
+                return outMid;
+        }
+        else // Inverted
+        {
+            if (rawAnalog >= leftMapper.getInputMax())
+                return leftMapper.map(rawAnalog);
+            else if (rawAnalog <= rightMapper.getInputMin())
+                return rightMapper.map(rawAnalog);
+            else
+                return outMid;
+        }
     }
 
 
