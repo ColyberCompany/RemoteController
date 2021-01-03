@@ -23,9 +23,8 @@ class AnalogToControlStick
 {
     Mapper<int16_t> leftMapper; // Maps values between min and center
     Mapper<int16_t> rightMapper; // Maps values between center and max
-    //uint16_t inMid;
-    //uint16_t inMidOffset;
     int16_t outMid;
+    bool invertedOutputRangeFlag = false;
 
 public:
     /**
@@ -51,47 +50,39 @@ public:
     // TODO: refactor this method
     void setAnalogInputProperties(uint16_t inMin, uint16_t inMid, uint16_t inMax, uint16_t inMidOffset)
     {
-        if (inMin <= inMax)
+        if (inMin > inMax)
         {
-            // If mid is not in <min:max> range
-            if (inMid < inMin || inMid > inMax)
-                return;
+            swap(inMin, inMax);
 
-            leftMapper.setInputRange(inMin, inMid - inMidOffset);
-            rightMapper.setInputRange(inMid + inMidOffset, inMax);
-        }
-        else // inverted range
-        {
-            // If mid is not in <min:max> range
-            if (inMid < inMax || inMid > inMin)
-                return;
+            // Assure mid is in <min:max> range
+            if (inMid < inMin)
+                inMid = inMin;
+            else if (inMid > inMax)
+                inMid = inMax;
 
-            leftMapper.setInputRange(inMin, inMid + inMidOffset);
-            rightMapper.setInputRange(inMid - inMidOffset, inMax);
+            if (invertedOutputRangeFlag == false) // if output range wasn't inverted before
+                invertMappersOutputRange();
+
+            invertedOutputRangeFlag = true;
         }
+
+        leftMapper.setInputRange(inMin, inMid - inMidOffset);
+        rightMapper.setInputRange(inMid + inMidOffset, inMax);
     }
 
 
     int16_t convert(uint16_t rawAnalog)
     {
-        if (leftMapper.getInputMin() < rightMapper.getInputMax())
-        {
-            if (rawAnalog <= leftMapper.getInputMax())
-                return leftMapper.map(rawAnalog);
-            else if (rawAnalog >= rightMapper.getInputMin())
-                return rightMapper.map(rawAnalog);
-            else
-                return outMid;
-        }
-        else // Inverted
-        {
-            if (rawAnalog >= leftMapper.getInputMax())
-                return leftMapper.map(rawAnalog);
-            else if (rawAnalog <= rightMapper.getInputMin())
-                return rightMapper.map(rawAnalog);
-            else
-                return outMid;
-        }
+        int16_t output;
+
+        if (rawAnalog <= leftMapper.getInputMax())
+            output = leftMapper.map(rawAnalog);
+        else if (rawAnalog >= rightMapper.getInputMin())
+            output = rightMapper.map(rawAnalog);
+        else
+            return outMid;
+
+        return getConstrainedOutput(output);
     }
 
 
@@ -99,24 +90,43 @@ public:
 private:
     void setOutputProperties(int16_t outMin, int16_t outMid, int16_t outMax)
     {
-        if (outMax < outMin)
-        {
-            // Swap
-            int16_t temp = outMin;
-            outMin = outMax;
-            outMax = temp;
-        }
-
-        // Check if mid is out of <min:max> range
-        if (outMid < outMin)
-            outMid = outMin;
-        else if (outMid > outMax)
-            outMid = outMax;
-
         leftMapper.setOutputRange(outMin, outMid);
         rightMapper.setOutputRange(outMid, outMax);
 
+        if (invertedOutputRangeFlag)
+            invertMappersOutputRange();
+
         this->outMid = outMid;
+    }
+
+
+    void invertMappersOutputRange()
+    {
+        Mapper<int16_t> oldLeftMapper = leftMapper;
+        leftMapper.setOutputRange(rightMapper.getOutputMax(), rightMapper.getOutputMin());
+        rightMapper.setOutputRange(oldLeftMapper.getOutputMax(), oldLeftMapper.getOutputMin());
+    }
+
+
+    int16_t getConstrainedOutput(int16_t value)
+    {
+        int16_t outMin = leftMapper.getOutputMin();
+        int16_t outMax = rightMapper.getOutputMax();
+
+        if (invertedOutputRangeFlag)
+            swap(outMin, outMax);
+
+        return constrain(value, outMin, outMax);
+    }
+
+
+    // TODO: think if to move it somewhere
+    template <class T>
+    void swap(T& first, T& second)
+    {
+        T temp = first;
+        first = second;
+        second = temp;
     }
 };
 
