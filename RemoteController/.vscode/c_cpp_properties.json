@@ -10,7 +10,9 @@
                 "C:\\Users\\janwi\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.7.4\\**",
 
                 "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\LiquidCrystal_I2C\\**",
-                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\Tasker\\**"
+                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\Tasker\\**",
+                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\ADS1115\\**",
+                "C:\\Users\\janwi\\Documents\\Arduino\\libraries\\SimpleDataStructures\\**"
             ],
             "forcedInclude": [
                 "C:\\Users\\janwi\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.7.4\\cores\\esp8266\\Arduino.h"
