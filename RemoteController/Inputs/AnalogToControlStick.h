@@ -34,10 +34,10 @@ public:
      * (have to be between inMin and inMax, could be equal).
      * @param inMax Raw input maximum value (can be less than inMin).
      * @param inMidOffset Raw offset value (distance from inMid when output value remain outMid).
-     * @param outMin Output minimum value (outMin < outMax).
+     * @param outMin Output minimum value.
      * @param outMid Output center value
      * (have to be between outMin and outMax, could be equal).
-     * @param outMax Output maximum value (outMax > outMin).
+     * @param outMax Output maximum value.
      */
     AnalogToControlStick(uint16_t inMin, uint16_t inMid, uint16_t inMax, uint16_t inMidOffset,
         int16_t outMin, int16_t outMid, int16_t outMax)

@@ -35,7 +35,7 @@ namespace Config
     const uint8_t LeftSwitchPin = D8;
     const uint8_t RightSwitchPin = D7;
 
-    const uint8_t ControlSticksInputOffset = 250;
+    const uint16_t ControlSticksInputOffset = 450;
 
     const char* const WiFiSSID = "HUAWEI_P_smart";
 	const char* const WiFiPassword = "22222222";
