@@ -33,32 +33,32 @@ bool ADS1115Handler::initialize()
 
 
     // Left/right switches analog read
-    pinMode(Config::leftSwitchPin, INPUT_PULLUP);
-    pinMode(Config::rightSwitchPin, INPUT_PULLUP);
+    pinMode(Config::LeftSwitchPin, INPUT_PULLUP);
+    pinMode(Config::RightSwitchPin, INPUT_PULLUP);
 
     return true;
 }
 
 
-uint16_t ADS1115Handler::getThrottle()
+uint16_t ADS1115Handler::getRawThrottle()
 {
     return adsMeasurements[0];
 }
 
 
-int16_t ADS1115Handler::getYaw()
+int16_t ADS1115Handler::getRawYaw()
 {
     return adsMeasurements[1];
 }
 
 
-int16_t ADS1115Handler::getPitch()
+int16_t ADS1115Handler::getRawPitch()
 {
     return adsMeasurements[2];
 }
 
 
-int16_t ADS1115Handler::getRoll()
+int16_t ADS1115Handler::getRawRoll()
 {
     return adsMeasurements[3];
 }

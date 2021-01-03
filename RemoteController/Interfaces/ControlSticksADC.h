@@ -9,6 +9,10 @@
 #ifndef CONTROLSTICKSADC_H
 #define CONTROLSTICKSADC_H
 
+#ifdef ARDUINO
+    #include <arduino.h>
+#endif
+
 
 namespace Interfaces
 {
@@ -18,10 +22,10 @@ namespace Interfaces
         virtual ~ControlSticksADC() {}
 
         virtual bool initialize() = 0;
-        virtual uint16_t getThrottle() = 0;
-        virtual int16_t getYaw() = 0;
-        virtual int16_t getPitch() = 0;
-        virtual int16_t getRoll() = 0;
+        virtual uint16_t getRawThrottle() = 0;
+        virtual int16_t getRawYaw() = 0;
+        virtual int16_t getRawPitch() = 0;
+        virtual int16_t getRawRoll() = 0;
     };
 }
 
