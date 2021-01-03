@@ -35,20 +35,27 @@ public:
     float getNewValue() override
     {
         using Enums::MeasurementType;
+        float newRawValue;
 
         switch (measurementType)
         {
         case MeasurementType::ThrottleStick:
-            return sticksADC.getThrottle();
+            newRawValue = sticksADC.getRawThrottle();
+            break;
         case MeasurementType::YawStick:
-            return sticksADC.getYaw();
+            newRawValue = sticksADC.getRawYaw();
+            break;
         case MeasurementType::PitchStick:
-            return sticksADC.getPitch();
+            newRawValue = sticksADC.getRawPitch();
+            break;
         case MeasurementType::RollStick:
-            return sticksADC.getRoll();
+            newRawValue = sticksADC.getRawRoll();
+            break;
         default:
-            return 0; // ERROR, this should never occure
+            return -2.2f; // ERROR, this should never occure
         }
+
+        return valueConverter.convert(newRawValue);
     }
 
     void setAnalogInputProperties(uint16_t inMin, uint16_t inMid, uint16_t inMax, uint16_t inMidOffset)
