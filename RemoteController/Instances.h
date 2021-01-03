@@ -10,13 +10,17 @@
 #define INSTANCES_H
 
 #include <ITasker.h>
+#include <TaskPlanner.h>
 #include "Interfaces/Screen.h"
+#include "Inputs/MeasurementsManager.h"
 
 
 namespace Instance
 {
     extern ITasker& tasker;
+    extern TaskPlanner& taskPlanner;
     extern Interfaces::Screen& screen;
+    extern MeasurementsManager& measurementsManager;
 }
 
 

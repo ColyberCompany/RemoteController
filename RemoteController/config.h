@@ -23,6 +23,7 @@
 namespace Config
 {
     const uint8_t MaxSimpleTaskerTasks = 15;
+    const uint8_t MaxTaskPlannerTasks = 10;
 
     const size_t DroneCommMaxBufferSize = 40;
     const size_t DroneCommMaxQueuedBuffers = 30;
@@ -31,8 +32,10 @@ namespace Config
     const uint16_t MainInterval_us = 1000000 / MainFrequency_Hz;
     const float MainInterval_s = 1.f / MainFrequency_Hz; // delta time between next main loop executions
 
-    const uint8_t leftSwitchPin = D8;
-    const uint8_t rightSwitchPin = D7;
+    const uint8_t LeftSwitchPin = D8;
+    const uint8_t RightSwitchPin = D7;
+
+    const uint8_t ControlSticksInputOffset = 250;
 
     const char* const WiFiSSID = "HUAWEI_P_smart";
 	const char* const WiFiPassword = "22222222";

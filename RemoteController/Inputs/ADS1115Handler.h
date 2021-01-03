@@ -33,10 +33,10 @@ public:
      * @return true if everything went well, false otherwise.
      */
     bool initialize() override;
-    uint16_t getThrottle() override;
-    int16_t getYaw() override;
-    int16_t getPitch() override;
-    int16_t getRoll() override;
+    uint16_t getRawThrottle() override;
+    int16_t getRawYaw() override;
+    int16_t getRawPitch() override;
+    int16_t getRawRoll() override;
 
 
 private:
