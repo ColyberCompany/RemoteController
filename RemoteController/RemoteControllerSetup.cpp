@@ -18,7 +18,7 @@
 
 
 // Helper functions
-void setupControlStickInputRanges();
+void setupControlStickInitialInputRanges();
 void setupMeasurements();
 void addTasksToTasker();
 //...
@@ -88,7 +88,7 @@ void setupRemoteController()
     Serial.println(" OK");
 
     Serial.print("Initialize sticks input ranges");
-    setupControlStickInputRanges();
+    setupControlStickInitialInputRanges();
     Serial.println(" OK");
 
     Serial.print("Initialize measurements");
@@ -104,7 +104,7 @@ void setupRemoteController()
 
 
 
-void setupControlStickInputRanges()
+void setupControlStickInitialInputRanges()
 {
     using Config::ControlSticksInputOffset;
 
