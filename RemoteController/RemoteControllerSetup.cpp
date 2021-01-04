@@ -142,7 +142,7 @@ void addTasksToTasker()
 {
     using Instance::tasker;
 
-    tasker.addTask(&Assemble::lcdScreen, 20);
+    tasker.addTask(&Assemble::lcdScreen, 15);
     tasker.addTask(new TestTask, 10);
     // TODO: create and add tasks
 }

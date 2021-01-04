@@ -13,8 +13,8 @@ LCDScreen::LCDScreen()
 {
     for (int i=0; i < Cols; i++)
     {
-        line1[i] = 'a';
-        line2[i] = 'a';
+        line1[i] = ' ';
+        line2[i] = ' ';
     }
 
     line1[Cols] = '\n';
@@ -51,7 +51,15 @@ void LCDScreen::execute()
 
 void LCDScreen::updateScreenData(const ScreenData& newData)
 {
-    // TODO: update line1 and line2 directly, don't store newData copy
+    // update line1 and line2 directly, don't store newData values
+
+    updateCharArray(line1, 0, "       ");
+    updateCharArray(line1, 3, newData.stickThrottle, false);
+    updateCharArray(line1, 4, stickValToSymbolHorizontal(newData.stickYaw));
+    updateCharArray(line1, 5, stickValToSymbolVertical(newData.stickPitch));
+    updateCharArray(line1, 6, stickValToSymbolHorizontal(newData.stickRoll));
+
+    // TODO: update all data
 }
 
 
@@ -78,7 +86,10 @@ uint8_t LCDScreen::getLastDigit(int number)
 
 uint8_t LCDScreen::getDigitsAmount(int number)
 {
-    uint8_t digitsCounter = 1;
+    if (number == 0)
+        return 1;
+
+    uint8_t digitsCounter = 0;
     while (number != 0)
     {
         digitsCounter++;
@@ -88,10 +99,10 @@ uint8_t LCDScreen::getDigitsAmount(int number)
 }
 
 
-void LCDScreen::updateCharArray(char* charArray, size_t position, int value, bool alignLeft = true)
+void LCDScreen::updateCharArray(char* charArray, size_t position, int value, bool alignLeft)
 {
     if (alignLeft)
-        updateCharArray(charArray, position + getDigitsAmount(value), value, false);
+        updateCharArray(charArray, position + getDigitsAmount(value) - 1, value, false);
     else
     {
         int temp = value; // TODO: figure out better name
@@ -99,9 +110,9 @@ void LCDScreen::updateCharArray(char* charArray, size_t position, int value, boo
         do
         {
             charArray[index] = getLastDigit(temp) + '0';
-            temp / 10;
+            temp /= 10;
             index--;
-        } while (temp != 0);
+        } while (temp != 0 && index >= 0);
     }
 }
 
