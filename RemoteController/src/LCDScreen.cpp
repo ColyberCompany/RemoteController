@@ -57,11 +57,20 @@ void LCDScreen::updateScreenData(const ScreenData& newData)
 {
     // update line1 and line2 directly, don't store newData values
 
-    updateText(line1, 0, "   "); // clear old throttle value
+    updateText(line1, 0, ' ', 3); // clear old throttle value
     updateText(line1, 0, newData.stickThrottle / 10);
     updateText(line1, 3, stickValToSymbolHorizontal(newData.stickYaw));
     updateText(line1, 4, stickValToSymbolVertical(newData.stickPitch));
     updateText(line1, 5, stickValToSymbolHorizontal(newData.stickRoll));
+
+    // drone angles
+    updateText(line1, 7, ' ', 3);
+    updateText(line1, 7, newData.dronePitch);
+
+    updateText(line1, 12, boolStateToSymbol(newData.leftSwitchState));
+    updateText(line1, 13, boolStateToSymbol(newData.rightSwitchState));
+
+    updateText(line1, 15, boolStateToSymbol(newData.droneConnectionState));
 
     // flight mode
     switch (newData.flightMode)
@@ -77,8 +86,7 @@ void LCDScreen::updateScreenData(const ScreenData& newData)
     }
 
 
-
-    // TODO: update all data
+    // update other data here...
 }
 
 
@@ -156,12 +164,13 @@ void LCDScreen::updateText(char* outputText, size_t position, int value, bool al
 }
 
 
-void LCDScreen::updateText(char* outputText, size_t position, char character)
+void LCDScreen::updateText(char* outputText, size_t position, char character, int howManyTimes)
 {
     if (outputText == nullptr)
         return;
 
-    outputText[position] = character;
+    for (size_t i = 0; i < howManyTimes && outputText[position + i] != '\0'; i++)
+        outputText[position + i] = character;
 }
 
 
@@ -195,5 +204,11 @@ char LCDScreen::stickValToSymbolVertical(int16_t value)
     if (value < 0)
         return 'v';
     return '-';
+}
+
+
+char LCDScreen::boolStateToSymbol(bool state)
+{
+    return state ? 255 : '_';
 }
 

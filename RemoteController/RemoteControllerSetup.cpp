@@ -15,6 +15,7 @@
 #include "Inputs/ControlStickADCAdapter.h"
 #include "Inputs/AnalogToControlStick.h"
 #include "Inputs/PinAdapter.h"
+#include "Tasks.h"
 
 
 // Helper functions
@@ -61,17 +62,6 @@ namespace Instance
     Screen& screen = Assemble::lcdScreen;
     MeasurementsManager& measurementsManager = Assemble::measurementsManager;
 }
-
-
-class TestTask : public Task
-{
-    void execute() override
-    {
-        //Serial.println("dziala");
-        //Serial.println(Assemble::ads1115Handler.getRawRoll());
-        //Serial.println(Assemble::pitchADCAdapter.getNewValue());
-    }
-};
 
 
 
@@ -125,14 +115,12 @@ void setupMeasurements()
     Assemble::rightSwitch.initializePin(INPUT_PULLUP);
 
     // Add all measurement sources to the measurementsManager
-
-    /*
     Assemble::measurementsManager.addMeasurementSource(&Assemble::throttleADCAdapter);
     Assemble::measurementsManager.addMeasurementSource(&Assemble::yawADCAdapter);
     Assemble::measurementsManager.addMeasurementSource(&Assemble::pitchADCAdapter);
     Assemble::measurementsManager.addMeasurementSource(&Assemble::rollADCAdapter);
     Assemble::measurementsManager.addMeasurementSource(&Assemble::leftSwitch);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::rightSwitch);*/
+    Assemble::measurementsManager.addMeasurementSource(&Assemble::rightSwitch);
     // add other measurements sources...
 }
 
@@ -141,7 +129,9 @@ void addTasksToTasker()
 {
     using Instance::tasker;
 
+    tasker.addTask(&Tasks::debugTask, 10);
     tasker.addTask(&Assemble::lcdScreen, 15);
-    tasker.addTask(new TestTask, 10);
-    // TODO: create and add tasks
+    tasker.addTask(&Tasks::updateScreenData, 15);
+
+    // add other tasks...
 }

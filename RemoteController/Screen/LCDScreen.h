@@ -77,12 +77,14 @@ private:
     void updateText(char* outputText, size_t position, int value, bool alignLeft = true);
 
     /**
-     * @brief Update outputText with one char (simply replace char at position).
+     * @brief Update outputText with one char.
      * @param outputText C style string.
      * @param position Index of replaced char in string.
      * @param character Character to replace.
+     * @param howManyTimes eg. if 1 - only replace char at position,
+     * if 2 - replace char at position and at the next position, etc.
      */
-    void updateText(char* outputText, size_t position, char character);
+    void updateText(char* outputText, size_t position, char character, int howManyTimes = 1);
 
     /**
      * @brief Update outputText with whole C style string starting from position index.
@@ -103,6 +105,11 @@ private:
      * @brief Change signed value for one char that resemble the value.
      */
     char stickValToSymbolVertical(int16_t value);
+
+    /**
+     * @brief Change switch state so some corresponding symbol.
+     */
+    char boolStateToSymbol(bool state);
 };
 
 

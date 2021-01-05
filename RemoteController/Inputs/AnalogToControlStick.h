@@ -47,7 +47,6 @@ public:
     }
 
 
-    // TODO: refactor this method
     void setAnalogInputProperties(uint16_t inMin, uint16_t inMid, uint16_t inMax, uint16_t inMidOffset)
     {
         if (inMin > inMax)
