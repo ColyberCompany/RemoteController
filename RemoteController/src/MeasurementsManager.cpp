@@ -22,7 +22,7 @@ bool MeasurementsManager::addMeasurementSource(Measurement* measurementSource)
 }
 
 
-float MeasurementsManager::getMeasurement(MeasurementType measurementType) const
+float MeasurementsManager::getMeasurement(MeasurementType measurementType)
 {
     Measurement* measurement = binarySearchMeasurementByType(measurementType);
     if (measurement != nullptr)
@@ -35,23 +35,25 @@ float MeasurementsManager::getMeasurement(MeasurementType measurementType) const
 bool MeasurementsManager::addMeasurementInAscendingOrderByType(Measurement* measurement)
 {
     size_t index = 0;
-    while (measurement->getType() > measurementsArray[index]->getType() &&
-        index < measurementsArray.getSize())
+    while (index < measurementsArray.getSize() &&
+        measurement->getType() > measurementsArray[index]->getType())
         index++;
 
     measurementsArray.add(measurement, index);
 }
 
 
-Measurement* MeasurementsManager::binarySearchMeasurementByType(MeasurementType type) const
+Measurement* MeasurementsManager::binarySearchMeasurementByType(MeasurementType type)
 {
-    size_t leftIndex = 0;
-    size_t rightIndex = measurementsArray.getSize();
+    if (measurementsArray.getSize() == 0)
+        return nullptr;
+
+    int leftIndex = 0;
+    int rightIndex = measurementsArray.getSize();
 
     while (leftIndex <= rightIndex)
     {
-        size_t midIndex = leftIndex + (rightIndex - leftIndex) / 2;
-        //MeasurementType midIndexType = measurementsArray[midIndex]->getType();
+        int midIndex = leftIndex + (rightIndex - leftIndex) / 2;
         Measurement* midMsmt = measurementsArray[midIndex]; // midMeasurement
 
         // Check if x is present at mid

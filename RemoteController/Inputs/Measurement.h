@@ -23,7 +23,7 @@ public:
     {
     }
 
-    Enums::MeasurementType getType()
+    Enums::MeasurementType getType() const
     {
         return measurementType;
     }

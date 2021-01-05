@@ -36,12 +36,12 @@ public:
      * @return Measurement result (-1 could just be a result or
      * measurement source was not added before using addMeasurementSource(_) method).
      */
-    float getMeasurement(Enums::MeasurementType measurementType) const;
+    float getMeasurement(Enums::MeasurementType measurementType);
 
 
 private:
     bool addMeasurementInAscendingOrderByType(Measurement* measurement);
-    Measurement* binarySearchMeasurementByType(Enums::MeasurementType type) const;
+    Measurement* binarySearchMeasurementByType(Enums::MeasurementType type);
 };
 
 

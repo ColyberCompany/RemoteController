@@ -16,7 +16,6 @@
     #include <arduino.h>
 #endif
 
-
 #include "Enums/BaudRateTypes.h"
 
 
