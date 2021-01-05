@@ -13,6 +13,8 @@
     #include <arduino.h>
 #endif
 
+#include "../Enums/FlightModeTypes.h"
+
 
 struct ScreenData
 {
@@ -26,6 +28,8 @@ struct ScreenData
 
     bool leftSwitchState;
     bool rightSwitchState;
+
+    Enums::FlightModeTypes flightMode;
 
     bool droneConnectionState;
 

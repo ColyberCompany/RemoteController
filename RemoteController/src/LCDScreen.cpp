@@ -7,6 +7,10 @@
 
 #include "../Screen/LCDScreen.h"
 
+
+const char LCDScreen::FlightModesLabels[][5] = {"||||", "stab", "alth", "posh"};
+const char* const LCDScreen::UnknownFlightModeLabel = "unk!";
+
  
 LCDScreen::LCDScreen()
     : lcd(LCD_ADDRESS, Cols, Rows)
@@ -17,8 +21,8 @@ LCDScreen::LCDScreen()
         line2[i] = ' ';
     }
 
-    line1[Cols] = '\n';
-    line2[Cols] = '\n';
+    line1[Cols] = '\0';
+    line2[Cols] = '\0';
 }
 
 
@@ -53,11 +57,26 @@ void LCDScreen::updateScreenData(const ScreenData& newData)
 {
     // update line1 and line2 directly, don't store newData values
 
-    updateCharArray(line1, 0, "       ");
-    updateCharArray(line1, 3, newData.stickThrottle, false);
-    updateCharArray(line1, 4, stickValToSymbolHorizontal(newData.stickYaw));
-    updateCharArray(line1, 5, stickValToSymbolVertical(newData.stickPitch));
-    updateCharArray(line1, 6, stickValToSymbolHorizontal(newData.stickRoll));
+    updateText(line1, 0, "   "); // clear old throttle value
+    updateText(line1, 0, newData.stickThrottle / 10);
+    updateText(line1, 3, stickValToSymbolHorizontal(newData.stickYaw));
+    updateText(line1, 4, stickValToSymbolVertical(newData.stickPitch));
+    updateText(line1, 5, stickValToSymbolHorizontal(newData.stickRoll));
+
+    // flight mode
+    switch (newData.flightMode)
+    {
+        case Enums::FlightModeTypes::UNARMED:
+        case Enums::FlightModeTypes::STABILIZE:
+        case Enums::FlightModeTypes::ALT_HOLD:
+        case Enums::FlightModeTypes::POS_HOLD:
+            updateText(line2, 0, FlightModesLabels[(int)newData.flightMode]);
+            break;
+        default:
+            updateText(line2, 0, UnknownFlightModeLabel);
+    }
+
+
 
     // TODO: update all data
 }
@@ -99,34 +118,63 @@ uint8_t LCDScreen::getDigitsAmount(int number)
 }
 
 
-void LCDScreen::updateCharArray(char* charArray, size_t position, int value, bool alignLeft)
+uint16_t LCDScreen::getTextLength(const char* text)
 {
+    uint16_t length = 0;
+    while (text[length] != '\0')
+        ++length;
+    return length;
+}
+
+
+void LCDScreen::updateText(char* outputText, size_t position, int value, bool alignLeft)
+{
+    // TODO: try to make going beyond outputText last char protection
+    if (outputText == nullptr)
+        return;
+
     if (alignLeft)
-        updateCharArray(charArray, position + getDigitsAmount(value) - 1, value, false);
+    {
+        size_t newPosition = position + getDigitsAmount(value) - (value<0 ? 0 : 1);
+        updateText(outputText, newPosition, value, false);
+    }
     else
     {
         int temp = value; // TODO: figure out better name
         int index = position;
         do
         {
-            charArray[index] = getLastDigit(temp) + '0';
+            char charDigit = getLastDigit(temp) + '0';
+            outputText[index] = charDigit;
             temp /= 10;
             index--;
         } while (temp != 0 && index >= 0);
+
+        if (value < 0 && index >= 0)
+            outputText[index] = '-';
     }
 }
 
 
-void LCDScreen::updateCharArray(char* charArray, size_t position, char character)
+void LCDScreen::updateText(char* outputText, size_t position, char character)
 {
-    charArray[position] = character;
+    if (outputText == nullptr)
+        return;
+
+    outputText[position] = character;
 }
 
 
-void LCDScreen::updateCharArray(char* charArray, size_t position, const char* text)
+void LCDScreen::updateText(char* outputText, size_t position, const char* text)
 {
-    for (size_t i = 0; text[i] != '\n'; i++)
-        charArray[position + i] = text[i];
+    if (outputText == nullptr)
+        return;
+
+    if (text == nullptr)
+        return;
+
+    for (size_t i = 0; text[i] != '\0' && text[position + i] != '\0'; i++)
+        outputText[position + i] = text[i];
 }
 
 

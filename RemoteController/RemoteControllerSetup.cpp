@@ -13,8 +13,8 @@
 #include "Enums/BaudRateTypes.h"
 #include "Inputs/ADS1115Handler.h"
 #include "Inputs/ControlStickADCAdapter.h"
-#include "Inputs/PinAdapter.h"
 #include "Inputs/AnalogToControlStick.h"
+#include "Inputs/PinAdapter.h"
 
 
 // Helper functions
@@ -69,7 +69,7 @@ class TestTask : public Task
     {
         //Serial.println("dziala");
         //Serial.println(Assemble::ads1115Handler.getRawRoll());
-        Serial.println(Assemble::pitchADCAdapter.getNewValue());
+        //Serial.println(Assemble::pitchADCAdapter.getNewValue());
     }
 };
 
@@ -119,7 +119,6 @@ void setupMeasurements()
 {
     // Initialize external ADC
     Assemble::ads1115Handler.initialize();
-    Serial.println("asdfasdfasfd");
 
     // Initialize digital pins
     Assemble::leftSwitch.initializePin(INPUT_PULLUP);
