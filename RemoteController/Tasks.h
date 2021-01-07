@@ -33,9 +33,10 @@ namespace Tasks
     {
         void execute() override
         {
-            using namespace Instance;
+            using Instance::measurementsManager;
             using Enums::MeasurementType;
-            ScreenData screenData;
+            
+            ScreenData& screenData = *Instance::screen.getScreenDataPointer();
 
             screenData.stickThrottle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
             screenData.stickYaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
@@ -46,8 +47,6 @@ namespace Tasks
             screenData.rightSwitchState = !(int)measurementsManager.getMeasurement(MeasurementType::RightSwitch);
 
             screenData.flightMode = Enums::FlightModeTypes::UNARMED; // TODO: update flight mode here
-
-            Instance::screen.updateScreenData(screenData);
         }
     } updateScreenData;
 
