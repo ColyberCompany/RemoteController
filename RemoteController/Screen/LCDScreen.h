@@ -18,16 +18,19 @@
 class LCDScreen : public Interfaces::Screen, public Task
 {
 private:
-    LiquidCrystal_I2C lcd;
     static const uint8_t LCD_ADDRESS = 0x3F;
     static const uint8_t Rows = 2;
     static const uint8_t Cols = 16;
 
+    static const char FlightModesLabels[][5];
+    static const char* const UnknownFlightModeLabel;
+
+    LiquidCrystal_I2C lcd;
+
     char line1[Cols + 1];
     char line2[Cols + 1];
 
-    static const char FlightModesLabels[][5];
-    static const char* const UnknownFlightModeLabel;
+    ScreenData screenData;
 
 public:
     LCDScreen();
@@ -35,10 +38,15 @@ public:
 
     bool initialize() override;
     void execute() override;
-    void updateScreenData(const ScreenData& newData) override;
+    ScreenData* getScreenDataPointer() override;
 
 
 private:
+    /**
+     * @brief Update line1 and line2 textx with data from screenData.
+     */
+    void updateLinesFromScreenData();
+
     /**
      * @brief Put to line1 and line2 all things that won't change
      * with updateScreenData() method call. 

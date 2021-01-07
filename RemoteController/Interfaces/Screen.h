@@ -20,8 +20,7 @@ namespace Interfaces
         virtual ~Screen() {}
 
         virtual bool initialize() = 0;
-        virtual void updateScreenData(const ScreenData& newData) = 0;
-        // virtual bool forceScreenUpdate() = 0; // TODO: think whether this method will be needed
+        virtual ScreenData* getScreenDataPointer() = 0;
     };
 }
 

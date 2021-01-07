@@ -49,37 +49,42 @@ bool LCDScreen::initialize()
 
 void LCDScreen::execute()
 {
+    updateLinesFromScreenData();
     printLines();
 }
 
 
-void LCDScreen::updateScreenData(const ScreenData& newData)
+ScreenData* LCDScreen::getScreenDataPointer()
 {
-    // update line1 and line2 directly, don't store newData values
+    return &screenData;
+}
 
+
+void LCDScreen::updateLinesFromScreenData()
+{
     updateText(line1, 0, ' ', 3); // clear old throttle value
-    updateText(line1, 0, newData.stickThrottle / 10);
-    updateText(line1, 3, stickValToSymbolHorizontal(newData.stickYaw));
-    updateText(line1, 4, stickValToSymbolVertical(newData.stickPitch));
-    updateText(line1, 5, stickValToSymbolHorizontal(newData.stickRoll));
+    updateText(line1, 0, screenData.stickThrottle / 10);
+    updateText(line1, 3, stickValToSymbolHorizontal(screenData.stickYaw));
+    updateText(line1, 4, stickValToSymbolVertical(screenData.stickPitch));
+    updateText(line1, 5, stickValToSymbolHorizontal(screenData.stickRoll));
 
     // drone angles
     updateText(line1, 7, ' ', 3);
-    updateText(line1, 7, newData.dronePitch);
+    updateText(line1, 7, screenData.dronePitch);
 
-    updateText(line1, 12, boolStateToSymbol(newData.leftSwitchState));
-    updateText(line1, 13, boolStateToSymbol(newData.rightSwitchState));
+    updateText(line1, 12, boolStateToSymbol(screenData.leftSwitchState));
+    updateText(line1, 13, boolStateToSymbol(screenData.rightSwitchState));
 
-    updateText(line1, 15, boolStateToSymbol(newData.droneConnectionState));
+    updateText(line1, 15, boolStateToSymbol(screenData.droneConnectionState));
 
     // flight mode
-    switch (newData.flightMode)
+    switch (screenData.flightMode)
     {
         case Enums::FlightModeTypes::UNARMED:
         case Enums::FlightModeTypes::STABILIZE:
         case Enums::FlightModeTypes::ALT_HOLD:
         case Enums::FlightModeTypes::POS_HOLD:
-            updateText(line2, 0, FlightModesLabels[(int)newData.flightMode]);
+            updateText(line2, 0, FlightModesLabels[(int)screenData.flightMode]);
             break;
         default:
             updateText(line2, 0, UnknownFlightModeLabel);
