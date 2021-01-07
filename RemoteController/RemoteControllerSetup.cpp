@@ -16,20 +16,31 @@
 #include "Inputs/AnalogToControlStick.h"
 #include "Inputs/PinAdapter.h"
 #include "Tasks.h"
+#include "ESP8266WiFiComm/ESP8266WiFiComm.cpp" // Including a cpp file was a simplest solution
+#include "Communication/DroneCommManager.h"
+#include "PacketCommunicationWithQueue.h"
 
 
 // Helper functions
+void addTasksToTasker();
 void setupControlStickInitialInputRanges();
 void setupMeasurements();
-void addTasksToTasker();
+void setupDroneCommunication();
 //...
 
 
 namespace Assemble
 {
+    // Tasker and TaskPlanner
     SimpleTasker simpleTasker(Config::MaxSimpleTaskerTasks);
     TaskPlanner taskPlanner(Config::MaxTaskPlannerTasks);
 
+    // Communication
+    ESP8266WiFiComm esp8266WiFiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
+    PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
+    DroneCommManager droneCommManager(droneComm);
+
+    // Screen
     LCDScreen lcdScreen;
 
     // Inputs
@@ -61,6 +72,8 @@ namespace Instance
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
     Screen& screen = Assemble::lcdScreen;
     MeasurementsManager& measurementsManager = Assemble::measurementsManager;
+    PacketCommunication& droneComm = Assemble::droneComm;
+    DroneCommManager& droneCommManager = Assemble::droneCommManager;
 }
 
 
@@ -71,6 +84,10 @@ void setupRemoteController()
     Serial.println("Program has started");
 
     delay(200);
+
+    Serial.print("Adds tasker tasks");
+    addTasksToTasker();
+    Serial.println(" OK");
 
     Serial.print("Initialize lcd");
     Assemble::lcdScreen.initialize();
@@ -85,13 +102,36 @@ void setupRemoteController()
     setupMeasurements();
     Serial.println(" OK");
 
-    Serial.print("Adds tasker tasks");
-    addTasksToTasker();
+    Serial.print("Setup communication");
+    setupDroneCommunication();
     Serial.println(" OK");
 
     // ...
 }
 
+
+class : public Task
+{
+    void execute() override
+    {
+        Instance::screen.getScreenDataPointer()->droneConnectionState = Assemble::esp8266WiFiComm.isConnected();
+    }
+} tempUpdateScreenWifiStateTask;
+
+
+
+void addTasksToTasker()
+{
+    using Instance::tasker;
+
+    tasker.addTask(&Tasks::debugTask, 10);
+    tasker.addTask(&Assemble::lcdScreen, 13);
+    tasker.addTask(&Tasks::updateScreenData, 13);
+
+    tasker.addTask(&tempUpdateScreenWifiStateTask, 13);
+
+    // add other tasks...
+}
 
 
 void setupControlStickInitialInputRanges()
@@ -125,13 +165,9 @@ void setupMeasurements()
 }
 
 
-void addTasksToTasker()
+void setupDroneCommunication()
 {
-    using Instance::tasker;
-
-    tasker.addTask(&Tasks::debugTask, 10);
-    tasker.addTask(&Assemble::lcdScreen, 15);
-    tasker.addTask(&Tasks::updateScreenData, 15);
-
-    // add other tasks...
+    Assemble::esp8266WiFiComm.begin();
+    // TODO: set target IP address
+    Assemble::droneComm.adaptConnectionStabilityToInterval();
 }

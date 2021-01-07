@@ -13,6 +13,8 @@
 #include <TaskPlanner.h>
 #include "Interfaces/Screen.h"
 #include "Inputs/MeasurementsManager.h"
+#include <PacketCommunication.h>
+#include "Communication/DroneCommManager.h"
 
 
 namespace Instance
@@ -21,6 +23,8 @@ namespace Instance
     extern TaskPlanner& taskPlanner;
     extern Interfaces::Screen& screen;
     extern MeasurementsManager& measurementsManager;
+    extern PacketCommunication& droneComm;
+    extern DroneCommManager& droneCommManager;
 }
 
 
