@@ -12,9 +12,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#ifdef ARDUINO
-    #include <arduino.h>
-#endif
 
 #include "Enums/BaudRateTypes.h"
 
