@@ -43,10 +43,12 @@ namespace Tasks
             screenData.stickPitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
             screenData.stickRoll = measurementsManager.getMeasurement(MeasurementType::RollStick);
 
-            screenData.leftSwitchState = !(int)measurementsManager.getMeasurement(MeasurementType::LeftSwitch);
-            screenData.rightSwitchState = !(int)measurementsManager.getMeasurement(MeasurementType::RightSwitch);
+            screenData.leftSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::LeftSwitch);
+            screenData.rightSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::RightSwitch);
 
             screenData.flightMode = Enums::FlightModeTypes::UNARMED; // TODO: update flight mode here
+
+            screenData.droneConnectionState = (bool)measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState);
         }
     } updateScreenData;
 

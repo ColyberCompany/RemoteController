@@ -19,7 +19,8 @@ namespace Enums
         PitchStick,
         RollStick,
         LeftSwitch,
-        RightSwitch
+        RightSwitch,
+        ESP8266WiFiState
         // add new here...
     };
 }

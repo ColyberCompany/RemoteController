@@ -29,6 +29,18 @@ void setupDroneCommunication();
 //...
 
 
+/**
+ * @brief This class enables wifi state to be available outside this file.
+ */
+class Esp8266WiFiStateMeasurementAdapter : public Measurement
+{
+public:
+    Esp8266WiFiStateMeasurementAdapter() : Measurement(Enums::MeasurementType::ESP8266WiFiState) {}
+    float getNewValue() override;
+};
+
+
+
 namespace Assemble
 {
     // Tasker and TaskPlanner
@@ -61,6 +73,7 @@ namespace Assemble
     // Other measurements
     DigitalPinAdapter leftSwitch(Enums::MeasurementType::LeftSwitch, Config::LeftSwitchPin);
     DigitalPinAdapter rightSwitch(Enums::MeasurementType::RightSwitch, Config::RightSwitchPin);
+    Esp8266WiFiStateMeasurementAdapter esp8266WiFiStateMeasurementAdapter;
 }
 
 
@@ -161,6 +174,7 @@ void setupMeasurements()
     Assemble::measurementsManager.addMeasurementSource(&Assemble::rollADCAdapter);
     Assemble::measurementsManager.addMeasurementSource(&Assemble::leftSwitch);
     Assemble::measurementsManager.addMeasurementSource(&Assemble::rightSwitch);
+    Assemble::measurementsManager.addMeasurementSource(&Assemble::esp8266WiFiStateMeasurementAdapter);
     // add other measurements sources...
 }
 
@@ -170,4 +184,12 @@ void setupDroneCommunication()
     Assemble::esp8266WiFiComm.begin();
     // TODO: set target IP address
     Assemble::droneComm.adaptConnectionStabilityToInterval();
+}
+
+
+
+
+float Esp8266WiFiStateMeasurementAdapter::getNewValue()
+{
+    return Assemble::esp8266WiFiComm.isConnected() ? 1.f : 0.f;
 }
