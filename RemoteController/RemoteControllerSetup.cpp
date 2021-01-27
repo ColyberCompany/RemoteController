@@ -19,6 +19,7 @@
 #include "ESP8266WiFiComm/ESP8266WiFiComm.cpp" // Including a cpp file was a simplest solution
 #include "Communication/DroneCommManager.h"
 #include "PacketCommunicationWithQueue.h"
+#include "StickGestures/ArmingStates.h"
 
 
 // Helper functions
@@ -26,6 +27,7 @@ void addTasksToTasker();
 void setupControlStickInitialInputRanges();
 void setupMeasurements();
 void setupDroneCommunication();
+void setupStickGestureRecognition();
 //...
 
 
@@ -59,6 +61,9 @@ namespace Assemble
     MeasurementsManager measurementsManager;
     ADS1115Handler ads1115Handler(taskPlanner);
 
+    // Gesture recognition
+    Context stickArmingContext;
+
     // Measurements - control sticks
     ControlStickADCAdapter throttleADCAdapter(Enums::MeasurementType::ThrottleStick,
         ads1115Handler, AnalogToControlStick(0, 512, 1023, 10, 0, 0, 1000));
@@ -87,6 +92,7 @@ namespace Instance
     MeasurementsManager& measurementsManager = Assemble::measurementsManager;
     PacketCommunication& droneComm = Assemble::droneComm;
     DroneCommManager& droneCommManager = Assemble::droneCommManager;
+    Context& stickArmingContext = Assemble::stickArmingContext;
 }
 
 
@@ -119,17 +125,13 @@ void setupRemoteController()
     setupDroneCommunication();
     Serial.println(" OK");
 
+    Serial.print("Setup stick gesture recognition");
+    setupStickGestureRecognition();
+    Serial.println(" OK");
+
     // ...
 }
 
-
-class : public Task
-{
-    void execute() override
-    {
-        Instance::screen.getScreenDataPointer()->droneConnectionState = Assemble::esp8266WiFiComm.isConnected();
-    }
-} tempUpdateScreenWifiStateTask;
 
 
 
@@ -140,8 +142,7 @@ void addTasksToTasker()
     tasker.addTask(&Tasks::debugTask, 10);
     tasker.addTask(&Assemble::lcdScreen, 13);
     tasker.addTask(&Tasks::updateScreenData, 13);
-
-    tasker.addTask(&tempUpdateScreenWifiStateTask, 13);
+    tasker.addTask(&Tasks::stickArmingContext, 10);
 
     // add other tasks...
 }
@@ -184,6 +185,12 @@ void setupDroneCommunication()
     Assemble::esp8266WiFiComm.begin();
     // TODO: set target IP address
     Assemble::droneComm.adaptConnectionStabilityToInterval();
+}
+
+
+void setupStickGestureRecognition()
+{
+    Assemble::stickArmingContext.setState<ArmChangeState1>(&Assemble::stickArmingContext);
 }
 
 

@@ -15,6 +15,7 @@
 #include "Inputs/MeasurementsManager.h"
 #include <PacketCommunication.h>
 #include "Communication/DroneCommManager.h"
+#include <Context.h>
 
 
 namespace Instance
@@ -25,6 +26,7 @@ namespace Instance
     extern MeasurementsManager& measurementsManager;
     extern PacketCommunication& droneComm;
     extern DroneCommManager& droneCommManager;
+    extern Context& stickArmingContext;
 }
 
 

@@ -38,6 +38,7 @@ namespace Tasks
             
             ScreenData& screenData = *Instance::screen.getScreenDataPointer();
 
+            // TODO: change using measurements manager directly to method from utils.h
             screenData.stickThrottle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
             screenData.stickYaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
             screenData.stickPitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
@@ -51,6 +52,15 @@ namespace Tasks
             screenData.droneConnectionState = (bool)measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState);
         }
     } updateScreenData;
+
+
+    class : public Task
+    {
+        void execute() override
+        {
+            Instance::stickArmingContext.updateState();
+        }
+    } stickArmingContext;
 
 
 }
