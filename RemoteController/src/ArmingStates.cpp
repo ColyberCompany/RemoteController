@@ -7,6 +7,7 @@
 
 #include "../StickGestures/ArmingStates.h"
 #include <Context.h>
+#include "../Instances.h"
 
 
 
@@ -80,11 +81,20 @@ void ArmChangeState2::updateState()
 
     if (sticksInNeutralPos())
     {
-        // TODO: do some action...
-        Serial.println("state changed");
+        // <<<< There is a arming changing action >>>>
+        changeArmState();
 
         context->setState<WaitingForNeutralSticksState>(context);
     }
+}
+
+void ArmChangeState2::changeArmState()
+{
+    using Instance::remoteControllerManager;
+    if (remoteControllerManager.isArmed())
+        remoteControllerManager.setDisarmed();
+    else
+        remoteControllerManager.setArmed();
 }
 
 

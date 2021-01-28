@@ -6,6 +6,7 @@
  */
 
 #include "RemoteControllerSetup.h"
+#include "RemoteControllerManager.h"
 #include "Instances.h"
 #include "Screen/LCDScreen.h"
 #include <SimpleTasker.h>
@@ -45,6 +46,8 @@ public:
 
 namespace Assemble
 {
+    RemoteControllerManager remoteControllerManager;
+
     // Tasker and TaskPlanner
     SimpleTasker simpleTasker(Config::MaxSimpleTaskerTasks);
     TaskPlanner taskPlanner(Config::MaxTaskPlannerTasks);
@@ -86,6 +89,7 @@ namespace Instance
 {
     using namespace Interfaces;
 
+    RemoteControllerManager& remoteControllerManager = Assemble::remoteControllerManager;
     ITasker& tasker = Assemble::simpleTasker;
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
     Screen& screen = Assemble::lcdScreen;

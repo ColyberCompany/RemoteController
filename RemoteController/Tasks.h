@@ -47,7 +47,7 @@ namespace Tasks
             screenData.leftSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::LeftSwitch);
             screenData.rightSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::RightSwitch);
 
-            screenData.flightMode = Enums::FlightModeTypes::UNARMED; // TODO: update flight mode here
+            screenData.flightMode = Instance::remoteControllerManager.getCurrentFlightMode();
 
             screenData.droneConnectionState = (bool)measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState);
         }

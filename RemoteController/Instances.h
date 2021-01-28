@@ -9,6 +9,7 @@
 #ifndef INSTANCES_H
 #define INSTANCES_H
 
+#include "RemoteControllerManager.h"
 #include <ITasker.h>
 #include <TaskPlanner.h>
 #include "Interfaces/Screen.h"
@@ -20,6 +21,7 @@
 
 namespace Instance
 {
+    extern RemoteControllerManager& remoteControllerManager;
     extern ITasker& tasker;
     extern TaskPlanner& taskPlanner;
     extern Interfaces::Screen& screen;

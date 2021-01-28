@@ -48,6 +48,7 @@ public:
 private:
     void entryEvent() override;
     void updateState() override;
+    void changeArmState();
 };
 
 
