@@ -33,7 +33,7 @@ public:
     Enums::FlightModeTypes getCurrentFlightMode();
 
 
-// list of friend classes:
+// list of friend classes: (this classes can make important changes)
     friend class ArmChangeState2;
 };
 
