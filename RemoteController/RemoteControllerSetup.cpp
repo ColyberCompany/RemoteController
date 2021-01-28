@@ -147,6 +147,7 @@ void addTasksToTasker()
     tasker.addTask(&Assemble::lcdScreen, 13);
     tasker.addTask(&Tasks::updateScreenData, 13);
     tasker.addTask(&Tasks::stickArmingContext, 15);
+    tasker.addTask(&Tasks::steeringSending, 150); // TODO: set frequency
 
     // add other tasks...
 }

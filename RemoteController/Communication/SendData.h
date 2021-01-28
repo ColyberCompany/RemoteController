@@ -9,6 +9,7 @@
 #ifndef SENDDATA_H
 #define SENDDATA_H
 
+#include "../Enums/FlightModeTypes.h"
 #include <ByteTypes.h>
 
 
@@ -21,8 +22,8 @@ struct DataForDrone
 
     uint16Byte pilotDistance_dm;
 	uint16Byte pilotDirection;
-    //uint8Byte flightMode; // read todo below
-    //uint8Byte signalLostScenario; // read todo below
+    uint8Byte flightMode;
+    //uint8Byte signalLostScenario; // read todo below (probably in a drone code)
 
     uint8Byte tunedPID_ID;
     floatByte pidP;

@@ -63,6 +63,23 @@ namespace Tasks
     } stickArmingContext;
 
 
+
+    class : public Task
+    {
+        void execute() override
+        {
+            using Instance::measurementsManager;
+            using Enums::MeasurementType;
+
+            DataForDrone& dataForDrone = Instance::droneCommManager.sending.data;
+            dataForDrone.throttle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
+            dataForDrone.yaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
+            dataForDrone.pitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
+            dataForDrone.roll = measurementsManager.getMeasurement(MeasurementType::RollStick);
+
+            Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.steering);
+        }
+    } steeringSending;
 }
 
 

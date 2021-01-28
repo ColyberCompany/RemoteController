@@ -12,6 +12,7 @@
 
 #include <PacketCommunication.h>
 #include <DataPacket.h>
+#include <EventPacket.h>
 #include "ReceiveData.h"
 #include "SendData.h"
 #include "PacketReceivedEvents.h"
@@ -25,10 +26,18 @@ public:
         DataForDrone data;
 
         DataPacket steering;
+        DataPacket newFlightMode;
+        EventPacket armDrone;
+        EventPacket disarmDrone;
         // add other here...
+        
+        // TODO: implement data packets and event packets for changing states like arming and flight modes
 
         Sending()
-            : steering(0)
+            : steering(0),
+              newFlightMode(10),
+              armDrone(100),
+              disarmDrone(101)
         {}
     } sending;
 
@@ -80,6 +89,9 @@ public:
         sending.steering.addByteType(sending.data.yaw);
         sending.steering.addByteType(sending.data.pitch);
         sending.steering.addByteType(sending.data.roll);
+
+        // new flight mode
+        sending.newFlightMode.addByteType(sending.data.flightMode);
     }
 
 
