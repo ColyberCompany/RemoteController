@@ -23,8 +23,10 @@ void ArmChangeState1::updateState()
     const uint16_t sticksThreshold = 480;
 
     // Change if left stick in bottom right corner and right stick in bottom left corner
-    if (sticks.getThrottle() == 0 && sticks.getYaw() > sticksThreshold &&
-        sticks.getPitch() < -sticksThreshold && sticks.getRoll() < -sticksThreshold)
+    if (throttleNeutral() &&
+        isYawGreaterThan(sticksThreshold) &&
+        isPitchLessThan(-sticksThreshold) &&
+        isRollLessThan(-sticksThreshold) )
     {
         // TODO: add timeout
 
@@ -45,9 +47,7 @@ void ArmChangeState2::updateState()
 {
     updateSticksValues();
 
-    // Change if neutral position
-    if (sticks.getThrottle() == 0 && sticks.getYaw() == 0 &&
-        sticks.getPitch() == 0 && sticks.getRoll() == 0)
+    if (sticksInNeutralPos())
     {
         // TODO: add timeout
 
