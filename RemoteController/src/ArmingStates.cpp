@@ -10,17 +10,41 @@
 
 
 
+WaitingForNeutralSticksState::WaitingForNeutralSticksState(Context* context)
+    : SticksState(context)
+{
+
+}
+
+void WaitingForNeutralSticksState::updateState()
+{
+    updateSticksValues();
+
+    if (sticksInNeutralPos())
+        context->setState<ArmChangeState1>(context);
+}
+
+
+// ------------
+
+
 ArmChangeState1::ArmChangeState1(Context* context)
     : SticksState(context)
 {
     
 }
 
+void ArmChangeState1::entryEvent()
+{
+    stateStartTime_ms = millis();
+}
+
 void ArmChangeState1::updateState()
 {
     updateSticksValues(); // update sticks values before use
 
-    const uint16_t sticksThreshold = 480;
+    if (millis() > stateStartTime_ms + Timeout_ms)
+        context->setState<WaitingForNeutralSticksState>(context);
 
     // Change if left stick in bottom right corner and right stick in bottom left corner
     if (throttleNeutral() &&
@@ -28,13 +52,12 @@ void ArmChangeState1::updateState()
         isPitchLessThan(-sticksThreshold) &&
         isRollLessThan(-sticksThreshold) )
     {
-        // TODO: add timeout
-
         context->setState<ArmChangeState2>(context);
     }
 }
 
 
+// ------------
 
 
 ArmChangeState2::ArmChangeState2(Context* context)
@@ -43,18 +66,24 @@ ArmChangeState2::ArmChangeState2(Context* context)
     
 }
 
+void ArmChangeState2::entryEvent()
+{
+    stateStartTime_ms = millis();
+}
+
 void ArmChangeState2::updateState()
 {
     updateSticksValues();
 
+    if (millis() > stateStartTime_ms + Timeout_ms)
+        context->setState<WaitingForNeutralSticksState>(context);
+
     if (sticksInNeutralPos())
     {
-        // TODO: add timeout
-
         // TODO: do some action...
         Serial.println("state changed");
 
-        context->setState<ArmChangeState1>(context);
+        context->setState<WaitingForNeutralSticksState>(context);
     }
 }
 

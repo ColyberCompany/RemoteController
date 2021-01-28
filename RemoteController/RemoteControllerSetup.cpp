@@ -142,7 +142,7 @@ void addTasksToTasker()
     tasker.addTask(&Tasks::debugTask, 10);
     tasker.addTask(&Assemble::lcdScreen, 13);
     tasker.addTask(&Tasks::updateScreenData, 13);
-    tasker.addTask(&Tasks::stickArmingContext, 10);
+    tasker.addTask(&Tasks::stickArmingContext, 15);
 
     // add other tasks...
 }
