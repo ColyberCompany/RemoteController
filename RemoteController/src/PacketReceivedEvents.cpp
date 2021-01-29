@@ -13,6 +13,7 @@ namespace PacketReceivedEvents
 {
     void MeasurementsAndState::execute()
     {
-        // TODO: implement measurementsAndState received event
+        // TODO: do something when received new data
+        // (LCD values update is in the lcd tasker task)
     }
 }

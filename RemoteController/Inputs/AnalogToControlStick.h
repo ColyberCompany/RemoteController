@@ -11,6 +11,7 @@
 #define ANALOGTOCONTROLSTICK_H
 
 #include "../Common/Mapper.h"
+#include "../utils.h"
 
 // TODO: refactor this class
 
@@ -51,7 +52,7 @@ public:
     {
         if (inMin > inMax)
         {
-            swap(inMin, inMax);
+            Utils::swap(inMin, inMax);
 
             // Assure mid is in <min:max> range
             if (inMid < inMin)
@@ -113,19 +114,9 @@ private:
         int16_t outMax = rightMapper.getOutputMax();
 
         if (invertedOutputRangeFlag)
-            swap(outMin, outMax);
+            Utils::swap(outMin, outMax);
 
         return constrain(value, outMin, outMax);
-    }
-
-
-    // TODO: think if to move it somewhere
-    template <class T>
-    void swap(T& first, T& second)
-    {
-        T temp = first;
-        first = second;
-        second = temp;
     }
 };
 

@@ -24,13 +24,11 @@ class RemoteControllerManager
     Enums::FlightModeTypes currentFlightMode = Enums::FlightModeTypes::UNARMED;
 
 private:
-    void setArmed();
-    void setDisarmed();
     void setFlightMode(Enums::FlightModeTypes flightModeType);
 
 public:
     bool isArmed();
-    Enums::FlightModeTypes getCurrentFlightMode();
+    Enums::FlightModeTypes getCurrentFlightModeType();
 
 
 // list of friend classes: (this classes can make important changes)

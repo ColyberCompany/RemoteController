@@ -13,28 +13,6 @@ using Enums::FlightModeTypes;
 using Enums::StateType;
 
 
-void RemoteControllerManager::setArmed()
-{
-    currentFlightMode = FlightModeTypes::STABILIZE; // FIXME: maybe add idle flight mode or something like that
-
-    // TODO: change for data packets with acknowledgment if implemented
-    Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.armDrone);
-
-    //Serial.println("armed");
-}
-
-
-void RemoteControllerManager::setDisarmed()
-{
-    currentFlightMode = FlightModeTypes::UNARMED;
-    
-    // TODO: change for data packets with acknowledgment if implemented
-    Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.disarmDrone);
-
-    //Serial.println("disarmed");
-}
-
-
 void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
 {
     currentFlightMode = flightModeType;
@@ -50,7 +28,7 @@ bool RemoteControllerManager::isArmed()
 }
 
 
-FlightModeTypes RemoteControllerManager::getCurrentFlightMode()
+FlightModeTypes RemoteControllerManager::getCurrentFlightModeType()
 {
     return currentFlightMode;
 }

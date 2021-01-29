@@ -9,28 +9,16 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "Inputs/MeasurementsManager.h"
-#include "Common/ControlSticks.h"
-
 
 namespace Utils
 {
-    ControlSticks controlSticksFromMeasurementsManager(MeasurementsManager& measurementsManager)
+    template <class T>
+    void swap(T& first, T& second)
     {
-        using Enums::MeasurementType;
-
-        ControlSticks controlSticks(
-            measurementsManager.getMeasurement(MeasurementType::ThrottleStick),
-            measurementsManager.getMeasurement(MeasurementType::YawStick),
-            measurementsManager.getMeasurement(MeasurementType::PitchStick),
-            measurementsManager.getMeasurement(MeasurementType::RollStick)
-        );
-
-        return controlSticks;
+        T temp = first;
+        first = second;
+        second = temp;
     }
-
-
-    // other utilities..
 }
 
 

@@ -7,7 +7,7 @@
 
 #include "../StickGestures/SticksState.h"
 #include "../Instances.h"
-#include "../utils.h"
+#include "../Inputs/MeasurementsManager.h"
 
 
 SticksState::SticksState(Context* context)
@@ -24,7 +24,13 @@ SticksState::~SticksState()
 void SticksState::updateSticksValues()
 {
     using Instance::measurementsManager;
-    sticks = Utils::controlSticksFromMeasurementsManager(measurementsManager);
+    using Enums::MeasurementType;
+    
+    sticks = ControlSticks(
+            measurementsManager.getMeasurement(MeasurementType::ThrottleStick),
+            measurementsManager.getMeasurement(MeasurementType::YawStick),
+            measurementsManager.getMeasurement(MeasurementType::PitchStick),
+            measurementsManager.getMeasurement(MeasurementType::RollStick) );
 }
 
 

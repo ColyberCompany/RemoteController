@@ -92,9 +92,9 @@ void ArmChangeState2::changeArmState()
 {
     using Instance::remoteControllerManager;
     if (remoteControllerManager.isArmed())
-        remoteControllerManager.setDisarmed();
+        remoteControllerManager.setFlightMode(Enums::FlightModeTypes::UNARMED);
     else
-        remoteControllerManager.setArmed();
+        remoteControllerManager.setFlightMode(Enums::FlightModeTypes::STABILIZE); // FIXME: set there proper flight mode !!
 }
 
 

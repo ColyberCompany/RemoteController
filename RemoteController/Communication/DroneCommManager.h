@@ -26,18 +26,14 @@ public:
         DataForDrone data;
 
         DataPacket steering;
-        DataPacket newFlightMode;
-        EventPacket armDrone;
-        EventPacket disarmDrone;
-        // add other here...
+        DataPacket newFlightMode; // TODO: maybe replace this with general config packet (or not, because this is important aciton)
+        // add other here... (remember, that there are also EventPackets)
         
         // TODO: implement data packets and event packets for changing states like arming and flight modes
 
         Sending()
             : steering(0),
-              newFlightMode(10),
-              armDrone(100),
-              disarmDrone(101)
+              newFlightMode(10)
         {}
     } sending;
 
@@ -69,7 +65,6 @@ public:
     // receive:
 
         // measurements and state
-        // TODO: think about structure of this packet and if to split it (same on the drone side)
         receiving.measurementsAndState.addByteType(receiving.data.pitchAngle_deg);
         receiving.measurementsAndState.addByteType(receiving.data.rollAngle_deg);
         receiving.measurementsAndState.addByteType(receiving.data.heading_deg);

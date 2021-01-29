@@ -38,7 +38,6 @@ namespace Tasks
             
             ScreenData& screenData = *Instance::screen.getScreenDataPointer();
 
-            // TODO: change using measurements manager directly to method from utils.h
             screenData.stickThrottle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
             screenData.stickYaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
             screenData.stickPitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
@@ -47,9 +46,12 @@ namespace Tasks
             screenData.leftSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::LeftSwitch);
             screenData.rightSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::RightSwitch);
 
-            screenData.flightMode = Instance::remoteControllerManager.getCurrentFlightMode();
+            screenData.flightMode = Instance::remoteControllerManager.getCurrentFlightModeType();
 
             screenData.droneConnectionState = (bool)measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState);
+
+            screenData.dronePitch = Instance::droneCommManager.receiving.data.pitchAngle_deg;
+            screenData.droneRoll = Instance::droneCommManager.receiving.data.rollAngle_deg;
         }
     } updateScreenData;
 

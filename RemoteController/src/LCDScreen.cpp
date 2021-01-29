@@ -142,7 +142,7 @@ uint16_t LCDScreen::getTextLength(const char* text)
 
 void LCDScreen::updateText(char* outputText, size_t position, int value, bool alignLeft)
 {
-    // TODO: try to make going beyond outputText last char protection
+    // TODO: protect against going beyond outputText last char
     if (outputText == nullptr)
         return;
 
