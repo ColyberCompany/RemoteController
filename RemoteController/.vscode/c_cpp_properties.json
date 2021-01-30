@@ -26,6 +26,29 @@
             "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
             "cppStandard": "c++17"
+        },
+        
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/jan/.arduino15/packages/esp8266/tools/**",
+                "/home/jan/.arduino15/packages/esp8266/hardware/esp8266/2.7.4/**",
+                "${workspaceFolder}/**",
+                "/home/jan/Downloads/arduino-1.8.10/libraries/**",
+                "/home/jan/Arduino/libraries/**",
+
+                "/home/jan/Arduino/libraries/StateDesignPatternLib/**"
+            ],
+            "defines": [
+                "USBCON"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "${default}",
+            "forcedInclude": [
+                "/home/jan/.arduino15/packages/esp8266/hardware/esp8266/2.7.4/cores/esp8266/Arduino.h"
+            ]
         }
     ],
     "version": 4
