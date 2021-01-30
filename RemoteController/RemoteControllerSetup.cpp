@@ -147,7 +147,8 @@ void addTasksToTasker()
     tasker.addTask(&Assemble::lcdScreen, 13);
     tasker.addTask(&Tasks::updateScreenData, 13);
     tasker.addTask(&Tasks::stickArmingContext, 15);
-    tasker.addTask(&Tasks::steeringSending, 150); // TODO: set frequency
+    tasker.addTask(&Tasks::steeringSending, Config::DroneCommSteeringSendingFrequency_Hz);
+    tasker.addTask(&Tasks::droneCommReceiving, Config::DroneCommReceivingFrequency_Hz);
 
     // add other tasks...
 }
@@ -157,6 +158,7 @@ void setupControlStickInitialInputRanges()
 {
     using Config::ControlSticksInputOffset;
 
+    // There you can set control sticks raw calibration values \/ \/
     Assemble::throttleADCAdapter.setAnalogInputProperties(16050, 16050, 790, ControlSticksInputOffset);
     Assemble::yawADCAdapter.setAnalogInputProperties(16400, 8800, 950, ControlSticksInputOffset);
     Assemble::pitchADCAdapter.setAnalogInputProperties(15790, 7660, 790, ControlSticksInputOffset);
@@ -189,7 +191,7 @@ void setupDroneCommunication()
 {
     Assemble::esp8266WiFiComm.begin();
     // TODO: set target IP address
-    Assemble::droneComm.adaptConnectionStabilityToInterval();
+    Assemble::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 }
 
 

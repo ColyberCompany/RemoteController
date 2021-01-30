@@ -82,6 +82,16 @@ namespace Tasks
             Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.steering);
         }
     } steeringSending;
+
+
+
+    class : public Task
+    {
+        void execute() override
+        {
+            Instance::droneComm.receiveAndUpdatePackets();
+        }
+    } droneCommReceiving;
 }
 
 
