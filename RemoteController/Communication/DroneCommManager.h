@@ -26,14 +26,14 @@ public:
         DataForDrone data;
 
         DataPacket steering;
-        DataPacket newFlightMode; // TODO: maybe replace this with general config packet (or not, because this is important aciton)
+        DataPacket flightModeChange;
         // add other here... (remember, that there are also EventPackets)
         
         // TODO: implement data packets and event packets for changing states like arming and flight modes
 
         Sending()
             : steering(0),
-              newFlightMode(10)
+              flightModeChange(10)
         {}
     } sending;
 
@@ -74,6 +74,7 @@ public:
         receiving.measurementsAndState.addByteType(receiving.data.droneConnectionStability);
         receiving.measurementsAndState.setPacketReceivedEvent(measurementsAndStatePacketEvent);
 
+        // Add all receiving packets to the PacketCommunication instance!! <<<<<<<<<<
         packetComm.addReceiveDataPacketPointer(&receiving.measurementsAndState);
 
 
@@ -85,8 +86,8 @@ public:
         sending.steering.addByteType(sending.data.pitch);
         sending.steering.addByteType(sending.data.roll);
 
-        // new flight mode
-        sending.newFlightMode.addByteType(sending.data.flightMode);
+        // flight mode change
+        sending.flightModeChange.addByteType(sending.data.flightMode);
     }
 
 
