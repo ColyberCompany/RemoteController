@@ -16,9 +16,10 @@ using Enums::StateType;
 void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
 {
     currentFlightMode = flightModeType;
-
+    
     Instance::droneCommManager.sending.data.flightMode = (uint8_t)currentFlightMode;
-    Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.newFlightMode);
+
+    Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.flightModeChange);
 }
 
 
