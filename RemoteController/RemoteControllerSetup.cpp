@@ -101,6 +101,20 @@ namespace Instance
 
 
 
+class : public Task
+    {
+        void execute() override
+        {
+            //Serial.println("dziala");
+            //Serial.println(Assemble::ads1115Handler.getRawRoll());
+            //Serial.println(Assemble::pitchADCAdapter.getNewValue());
+            Serial.println(Assemble::esp8266WiFiComm.getDeviceIPAddress());
+        }
+    } debugTask;
+
+
+
+
 void setupRemoteController()
 {
     Serial.begin(Enums::BAUD_115200);
@@ -143,7 +157,7 @@ void addTasksToTasker()
 {
     using Instance::tasker;
 
-    tasker.addTask(&Tasks::debugTask, 10);
+    tasker.addTask(&debugTask, 10);
     tasker.addTask(&Assemble::lcdScreen, 13);
     tasker.addTask(&Tasks::updateScreenData, 13);
     tasker.addTask(&Tasks::stickArmingContext, 15);

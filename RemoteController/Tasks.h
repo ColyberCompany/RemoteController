@@ -17,18 +17,6 @@
 namespace Tasks
 {
 
-
-    class : public Task
-    {
-        void execute() override
-        {
-            //Serial.println("dziala");
-            //Serial.println(Assemble::ads1115Handler.getRawRoll());
-            //Serial.println(Assemble::pitchADCAdapter.getNewValue());
-        }
-    } debugTask;
-
-
     class : public Task
     {
         void execute() override
