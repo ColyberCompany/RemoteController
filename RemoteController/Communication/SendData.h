@@ -15,7 +15,7 @@
 
 struct DataForDrone
 {
-    uint16Byte throttle;
+    uint16Byte throttle; // TODO: change names to indicate control sticks
     int16Byte yaw;
     int16Byte pitch;
     int16Byte roll;

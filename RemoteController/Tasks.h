@@ -67,6 +67,13 @@ namespace Tasks
             dataForDrone.pitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
             dataForDrone.roll = measurementsManager.getMeasurement(MeasurementType::RollStick);
 
+            if (dataForDrone.throttle < 10)
+            {
+                dataForDrone.yaw = 0;
+                dataForDrone.pitch = 0;
+                dataForDrone.roll = 0;
+            }
+
             Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.steering);
         }
     } steeringSending;
