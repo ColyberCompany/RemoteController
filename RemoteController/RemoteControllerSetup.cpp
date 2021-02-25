@@ -108,7 +108,7 @@ class : public Task
             //Serial.println("dziala");
             //Serial.println(Assemble::ads1115Handler.getRawRoll());
             //Serial.println(Assemble::pitchADCAdapter.getNewValue());
-            Serial.println(Assemble::esp8266WiFiComm.getDeviceIPAddress());
+            Serial.println(Assemble::esp8266WiFiComm.getLocalIP());
         }
     } debugTask;
 
