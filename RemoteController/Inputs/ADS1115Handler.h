@@ -17,7 +17,7 @@
 
 class ADS1115Handler : public Interfaces::ControlSticksADC, public Task
 {
-    TaskPlanner& taskPlanner;
+    TaskPlanner& taskPlanner; // TODO: rewrite this class using ITasker (like in MS5611 library now)
     ADS1115 ads1115;
 
     uint16_t adsMeasurements[4] = {};

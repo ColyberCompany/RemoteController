@@ -190,13 +190,14 @@ void setupMeasurements()
     Assemble::rightSwitch.initializePin(INPUT_PULLUP);
 
     // Add all measurement sources to the measurementsManager
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::throttleADCAdapter);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::yawADCAdapter);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::pitchADCAdapter);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::rollADCAdapter);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::leftSwitch);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::rightSwitch);
-    Assemble::measurementsManager.addMeasurementSource(&Assemble::esp8266WiFiStateMeasurementAdapter);
+    using Assemble::measurementsManager;
+    measurementsManager.addMeasurementSource(&Assemble::throttleADCAdapter);
+    measurementsManager.addMeasurementSource(&Assemble::yawADCAdapter);
+    measurementsManager.addMeasurementSource(&Assemble::pitchADCAdapter);
+    measurementsManager.addMeasurementSource(&Assemble::rollADCAdapter);
+    measurementsManager.addMeasurementSource(&Assemble::leftSwitch);
+    measurementsManager.addMeasurementSource(&Assemble::rightSwitch);
+    measurementsManager.addMeasurementSource(&Assemble::esp8266WiFiStateMeasurementAdapter);
     // add other measurements sources...
 }
 
