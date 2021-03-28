@@ -18,16 +18,17 @@
 #include "Inputs/PinAdapter.h"
 #include "Tasks.h"
 #include "ESP8266WiFiComm/ESP8266WiFiComm.cpp" // Including a cpp file was a simplest solution
-#include "Communication/DroneCommManager.h"
 #include "PacketCommunicationWithQueue.h"
 #include "StickGestures/ArmingStates.h"
+#include "Communication/CommData.h"
+#include "Communication/DataPackets.h"
 
 
 // Helper functions
 void addTasksToTasker();
 void setupControlStickInitialInputRanges();
 void setupMeasurements();
-void setupDroneCommunication();
+void setupCommunication();
 void setupStickGestureRecognition();
 //...
 
@@ -52,10 +53,10 @@ namespace Assemble
     SimpleTasker simpleTasker(Config::MaxSimpleTaskerTasks);
     TaskPlanner taskPlanner(Config::MaxTaskPlannerTasks);
 
-    // Communication
-    ESP8266WiFiComm esp8266WiFiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
-    PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
-    DroneCommManager droneCommManager(droneComm);
+    namespace Communication {
+        ESP8266WiFiComm esp8266WiFiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
+        PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
+    }
 
     // Screen
     LCDScreen lcdScreen;
@@ -94,8 +95,8 @@ namespace Instance
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
     Screen& screen = Assemble::lcdScreen;
     MeasurementsManager& measurementsManager = Assemble::measurementsManager;
-    PacketCommunication& droneComm = Assemble::droneComm;
-    DroneCommManager& droneCommManager = Assemble::droneCommManager;
+    PacketCommunication& droneComm = Assemble::Communication::droneComm;
+    //DroneCommManager& droneCommManager = Assemble::droneCommManager;
     Context& stickArmingContext = Assemble::stickArmingContext;
 }
 
@@ -108,7 +109,7 @@ class : public Task
             //Serial.println("dziala");
             //Serial.println(Assemble::ads1115Handler.getRawRoll());
             //Serial.println(Assemble::pitchADCAdapter.getNewValue());
-            Serial.println(Assemble::esp8266WiFiComm.getLocalIP());
+            Serial.println(Assemble::Communication::esp8266WiFiComm.getLocalIP());
         }
     } debugTask;
 
@@ -140,7 +141,7 @@ void setupRemoteController()
     Serial.println(" OK");
 
     Serial.print("Setup communication");
-    setupDroneCommunication();
+    setupCommunication();
     Serial.println(" OK");
 
     Serial.print("Setup stick gesture recognition");
@@ -202,11 +203,13 @@ void setupMeasurements()
 }
 
 
-void setupDroneCommunication()
+void setupCommunication()
 {
-    Assemble::esp8266WiFiComm.begin();
+    Assemble::Communication::esp8266WiFiComm.begin();
     // TODO: set target IP address
-    Assemble::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
+    Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
+
+    Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::droneMeasurementsAndState);  
 }
 
 
@@ -220,5 +223,5 @@ void setupStickGestureRecognition()
 
 float Esp8266WiFiStateMeasurementAdapter::getNewValue()
 {
-    return Assemble::esp8266WiFiComm.isConnected() ? 1.f : 0.f;
+    return Assemble::Communication::esp8266WiFiComm.isConnected() ? 1.f : 0.f;
 }

@@ -8,12 +8,10 @@
 #include "../Communication/PacketReceivedEvents.h"
 #include "../Instances.h"
 
+using namespace PacketReceivedEvents;
 
-namespace PacketReceivedEvents
-{
-    void MeasurementsAndState::execute()
-    {
-        // TODO: do something when received new data
-        // (LCD values update is in the lcd tasker task)
-    }
+
+void DroneMeasurementsAndState::execute() {
+    // TODO: do something when received new data
+    // (LCD values update is in the lcd tasker task)
 }

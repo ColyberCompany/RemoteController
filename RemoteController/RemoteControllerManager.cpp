@@ -7,6 +7,8 @@
 
 #include "RemoteControllerManager.h"
 #include "Instances.h"
+#include "Communication/CommData.h"
+#include "Communication/DataPackets.h"
 
 using namespace Instance;
 using Enums::FlightModeTypes;
@@ -17,9 +19,9 @@ void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
 {
     currentFlightMode = flightModeType;
     
-    Instance::droneCommManager.sending.data.flightMode = (uint8_t)currentFlightMode;
+    commData.flightMode = (uint8_t)currentFlightMode;
 
-    Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.flightModeChange);
+    Instance::droneComm.sendDataPacket(&DataPackets::flightModeChange);
 }
 
 
