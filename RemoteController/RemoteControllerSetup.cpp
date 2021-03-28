@@ -210,6 +210,8 @@ void setupCommunication()
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
     Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::droneMeasurementsAndState);  
+    Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::pidTuningAndroid);
+    // add other data packets that could be received...
 }
 
 

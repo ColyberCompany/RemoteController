@@ -28,7 +28,5 @@ void PIDTuningAndroid::execute()
     commData.pidTuning.kD = float(commData.pidTuningAndroid.kD) / 100.f;
     commData.pidTuning.iMax = (float)commData.pidTuningAndroid.iMax;
 
-    // temporary <<<<<<<<<<<<
-    //Instance::droneComm.sendDataPacket(&DataPackets::pidTuning);
-    // <<<<<<<<<<<<<<<
+    Instance::droneComm.sendDataPacket(&DataPackets::pidTuning);
 }

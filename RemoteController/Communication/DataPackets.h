@@ -77,6 +77,8 @@ namespace DataPacketClasses
 
     class PIDTuningAndroid : public DataPacket
     {
+        PacketReceivedEvents::PIDTuningAndroid recEvent;
+
     public:
         PIDTuningAndroid() : DataPacket(100) {
             addByteType(commData.pidTuningAndroid.tunedController_ID);
@@ -84,6 +86,8 @@ namespace DataPacketClasses
             addByteType(commData.pidTuningAndroid.kI);
             addByteType(commData.pidTuningAndroid.kD);
             addByteType(commData.pidTuningAndroid.iMax);
+
+            setPacketReceivedEvent(recEvent);
         }
     };
 }
