@@ -65,6 +65,7 @@ namespace DataPacketClasses
 
 namespace DataPackets
 {
+    // Instances created in src/CommunicationGlobals.cpp
     extern DataPacketClasses::Steering steering;
     extern DataPacketClasses::FlightModeChange flightModeChange;
     extern DataPacketClasses::DroneMeasurementsAndState droneMeasurementsAndState;
