@@ -24,6 +24,7 @@ namespace DataPacketClasses
 {
     class Steering : public DataPacket
     {
+    public:
         Steering() : DataPacket(0) {
             addByteType(commData.pilot.stick.throttle);
             addByteType(commData.pilot.stick.yaw);
@@ -35,6 +36,7 @@ namespace DataPacketClasses
 
     class FlightModeChange : public DataPacket
     {
+    public:
         FlightModeChange() : DataPacket(10) {
             addByteType(commData.flightMode);
         }
@@ -43,6 +45,9 @@ namespace DataPacketClasses
 
     class DroneMeasurementsAndState : public DataPacket
     {
+        PacketReceivedEvents::DroneMeasurementsAndState recEvent;
+        
+    public:
         DroneMeasurementsAndState() : DataPacket(50) {
             addByteType(commData.drone.pitchAngle_deg);
             addByteType(commData.drone.rollAngle_deg);
@@ -54,8 +59,6 @@ namespace DataPacketClasses
 
             setPacketReceivedEvent(recEvent);
         }
-
-        PacketReceivedEvents::DroneMeasurementsAndState recEvent;
     };
 }
 

@@ -12,6 +12,8 @@
 #include <Task.h>
 #include "Instances.h"
 #include "Common/ScreenData.h"
+#include "Communication/CommData.h"
+#include "Communication/DataPackets.h"
 
 
 namespace Tasks
@@ -38,8 +40,8 @@ namespace Tasks
 
             screenData.droneConnectionState = (bool)measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState);
 
-            screenData.dronePitch = Instance::droneCommManager.receiving.data.pitchAngle_deg;
-            screenData.droneRoll = Instance::droneCommManager.receiving.data.rollAngle_deg;
+            screenData.dronePitch = commData.drone.pitchAngle_deg;
+            screenData.droneRoll = commData.drone.rollAngle_deg;
         }
     } updateScreenData;
 
@@ -61,20 +63,19 @@ namespace Tasks
             using Instance::measurementsManager;
             using Enums::MeasurementType;
 
-            DataForDrone& dataForDrone = Instance::droneCommManager.sending.data;
-            dataForDrone.throttle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
-            dataForDrone.yaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
-            dataForDrone.pitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
-            dataForDrone.roll = measurementsManager.getMeasurement(MeasurementType::RollStick);
+            commData.pilot.stick.throttle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
+            commData.pilot.stick.yaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
+            commData.pilot.stick.pitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
+            commData.pilot.stick.roll = measurementsManager.getMeasurement(MeasurementType::RollStick);
 
-            if (dataForDrone.throttle < 10)
+            if (commData.pilot.stick.throttle < 10)
             {
-                dataForDrone.yaw = 0;
-                dataForDrone.pitch = 0;
-                dataForDrone.roll = 0;
+                commData.pilot.stick.yaw = 0;
+                commData.pilot.stick.pitch = 0;
+                commData.pilot.stick.roll = 0;
             }
 
-            Instance::droneComm.sendDataPacket(&Instance::droneCommManager.sending.steering);
+            Instance::droneComm.sendDataPacket(&DataPackets::steering);
         }
     } steeringSending;
 
