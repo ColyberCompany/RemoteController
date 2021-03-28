@@ -1,7 +1,7 @@
 /**
  * @file PacketReceivedEvents.h
  * @author Jan Wielgus
- * @brief Implementation of all packet events
+ * @brief Implementation of all packet events.
  * @date 2021-01-07
  * 
  */
@@ -14,8 +14,7 @@
 
 namespace PacketReceivedEvents
 {
-    class MeasurementsAndState : public IExecutable
-    {
+    class DroneMeasurementsAndState : public IExecutable {
         void execute() override;
     };
 
