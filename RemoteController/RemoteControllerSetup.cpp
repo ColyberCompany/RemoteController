@@ -53,9 +53,10 @@ namespace Assemble
     SimpleTasker simpleTasker(Config::MaxSimpleTaskerTasks);
     TaskPlanner taskPlanner(Config::MaxTaskPlannerTasks);
 
-    // Communication
-    ESP8266WiFiComm esp8266WiFiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
-    PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
+    namespace Communication {
+        ESP8266WiFiComm esp8266WiFiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
+        PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
+    }
 
     // Screen
     LCDScreen lcdScreen;
@@ -94,7 +95,7 @@ namespace Instance
     TaskPlanner& taskPlanner = Assemble::taskPlanner;
     Screen& screen = Assemble::lcdScreen;
     MeasurementsManager& measurementsManager = Assemble::measurementsManager;
-    PacketCommunication& droneComm = Assemble::droneComm;
+    PacketCommunication& droneComm = Assemble::Communication::droneComm;
     //DroneCommManager& droneCommManager = Assemble::droneCommManager;
     Context& stickArmingContext = Assemble::stickArmingContext;
 }
@@ -108,7 +109,7 @@ class : public Task
             //Serial.println("dziala");
             //Serial.println(Assemble::ads1115Handler.getRawRoll());
             //Serial.println(Assemble::pitchADCAdapter.getNewValue());
-            Serial.println(Assemble::esp8266WiFiComm.getLocalIP());
+            Serial.println(Assemble::Communication::esp8266WiFiComm.getLocalIP());
         }
     } debugTask;
 
@@ -204,7 +205,7 @@ void setupMeasurements()
 
 void setupCommunication()
 {
-    Assemble::esp8266WiFiComm.begin();
+    Assemble::Communication::esp8266WiFiComm.begin();
     // TODO: set target IP address
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
@@ -222,5 +223,5 @@ void setupStickGestureRecognition()
 
 float Esp8266WiFiStateMeasurementAdapter::getNewValue()
 {
-    return Assemble::esp8266WiFiComm.isConnected() ? 1.f : 0.f;
+    return Assemble::Communication::esp8266WiFiComm.isConnected() ? 1.f : 0.f;
 }
