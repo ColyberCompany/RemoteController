@@ -41,7 +41,15 @@ struct CommData
         floatByte kI;
         floatByte kD;
         floatByte iMax;
-    } pidTuner;
+    } pidTuning;
+
+    struct {
+        uint8Byte tunedController_ID;
+        int32Byte kP;
+        int32Byte kI;
+        int32Byte kD;
+        int32Byte iMax;
+    } pidTuningAndroid;
 
 
     uint8Byte flightMode;

@@ -20,5 +20,7 @@ namespace DataPackets
     Steering steering;
     FlightModeChange flightModeChange;
     DroneMeasurementsAndState droneMeasurementsAndState;
+    PIDTuning pidTuning;
+    PIDTuningAndroid pidTuningAndroid;
     // all other data packets...
 }
