@@ -206,10 +206,12 @@ void setupMeasurements()
 void setupCommunication()
 {
     Assemble::Communication::esp8266WiFiComm.begin();
-    // TODO: set target IP address
+    Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 151); // drone WiFi device address
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
     Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::droneMeasurementsAndState);  
+    Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::pidTuningAndroid);
+    // add other data packets that could be received...
 }
 
 

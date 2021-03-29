@@ -19,7 +19,12 @@ namespace PacketReceivedEvents
     };
 
 
-    // events for other data packets
+    class PIDTuningAndroid : public IExecutable {
+        void execute() override;
+    };
+
+
+    // events for other data packets...
 }
 
 

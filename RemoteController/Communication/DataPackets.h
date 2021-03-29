@@ -60,6 +60,36 @@ namespace DataPacketClasses
             setPacketReceivedEvent(recEvent);
         }
     };
+
+
+    class PIDTuning : public DataPacket
+    {
+    public:
+        PIDTuning() : DataPacket(51) {
+            addByteType(commData.pidTuning.tunedController_ID);
+            addByteType(commData.pidTuning.kP);
+            addByteType(commData.pidTuning.kI);
+            addByteType(commData.pidTuning.kD);
+            addByteType(commData.pidTuning.iMax);
+        }
+    };
+
+
+    class PIDTuningAndroid : public DataPacket
+    {
+        PacketReceivedEvents::PIDTuningAndroid recEvent;
+
+    public:
+        PIDTuningAndroid() : DataPacket(100) {
+            addByteType(commData.pidTuningAndroid.tunedController_ID);
+            addByteType(commData.pidTuningAndroid.kP);
+            addByteType(commData.pidTuningAndroid.kI);
+            addByteType(commData.pidTuningAndroid.kD);
+            addByteType(commData.pidTuningAndroid.iMax);
+
+            setPacketReceivedEvent(recEvent);
+        }
+    };
 }
 
 
@@ -69,6 +99,8 @@ namespace DataPackets
     extern DataPacketClasses::Steering steering;
     extern DataPacketClasses::FlightModeChange flightModeChange;
     extern DataPacketClasses::DroneMeasurementsAndState droneMeasurementsAndState;
+    extern DataPacketClasses::PIDTuning pidTuning;
+    extern DataPacketClasses::PIDTuningAndroid pidTuningAndroid;
 }
 
 
