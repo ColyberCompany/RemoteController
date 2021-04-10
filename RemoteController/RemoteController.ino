@@ -17,7 +17,7 @@ void setup()
 
 void loop()
 {
-    Instance::tasker.runLoop();
+    Instance::tasker.loop();
     Instance::taskPlanner.execute();
 }
 
