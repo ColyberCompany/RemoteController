@@ -54,7 +54,7 @@ namespace Assemble
     TaskPlanner taskPlanner(Config::MaxTaskPlannerTasks);
 
     namespace Communication {
-        ESP8266WiFiComm esp8266WiFiComm(Config::WiFiSSID, Config::WiFiPassword, Config::WiFiPort, Config::DroneCommMaxBufferSize);
+        ESP8266WiFiComm esp8266WiFiComm(Config::WiFiPort, Config::DroneCommMaxBufferSize);
         PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
     }
 
@@ -205,7 +205,8 @@ void setupMeasurements()
 
 void setupCommunication()
 {
-    Assemble::Communication::esp8266WiFiComm.begin();
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(Config::WiFiSSID, Config::WiFiPassword);
     Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 151); // drone WiFi device address
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
