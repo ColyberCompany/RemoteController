@@ -9,7 +9,7 @@
 #ifndef TASKS_H
 #define TASKS_H
 
-#include <Task.h>
+#include <IExecutable.h>
 #include "Instances.h"
 #include "Common/ScreenData.h"
 #include "Communication/CommData.h"
@@ -19,7 +19,7 @@
 namespace Tasks
 {
 
-    class : public Task
+    class : public IExecutable
     {
         void execute() override
         {
@@ -46,7 +46,7 @@ namespace Tasks
     } updateScreenData;
 
 
-    class : public Task
+    class : public IExecutable
     {
         void execute() override
         {
@@ -56,7 +56,7 @@ namespace Tasks
 
 
 
-    class : public Task
+    class : public IExecutable
     {
         void execute() override
         {
@@ -75,17 +75,17 @@ namespace Tasks
                 commData.pilot.stick.roll = 0;
             }
 
-            Instance::droneComm.sendDataPacket(&DataPackets::steering);
+            Instance::droneComm.send(&DataPackets::steering);
         }
     } steeringSending;
 
 
 
-    class : public Task
+    class : public IExecutable
     {
         void execute() override
         {
-            Instance::droneComm.receiveAndUpdatePackets();
+            Instance::droneComm.receive();
         }
     } droneCommReceiving;
 }

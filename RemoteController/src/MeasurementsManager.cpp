@@ -16,9 +16,15 @@ MeasurementsManager::MeasurementsManager()
 }
 
 
-bool MeasurementsManager::addMeasurementSource(Measurement* measurementSource)
+bool MeasurementsManager::addMeasurementSource(Measurement* measurement)
 {
-    return addMeasurementInAscendingOrderByType(measurementSource);
+    // add in ascending order by type
+    size_t index = 0;
+    while (index < measurementsArray.size() &&
+        measurement->getType() > measurementsArray[index]->getType())
+        index++;
+
+    return measurementsArray.add(measurement, index);
 }
 
 
@@ -32,24 +38,13 @@ float MeasurementsManager::getMeasurement(MeasurementType measurementType)
 
 
 
-bool MeasurementsManager::addMeasurementInAscendingOrderByType(Measurement* measurement)
-{
-    size_t index = 0;
-    while (index < measurementsArray.getSize() &&
-        measurement->getType() > measurementsArray[index]->getType())
-        index++;
-
-    measurementsArray.add(measurement, index);
-}
-
-
 Measurement* MeasurementsManager::binarySearchMeasurementByType(MeasurementType type)
 {
-    if (measurementsArray.getSize() == 0)
+    if (measurementsArray.size() == 0)
         return nullptr;
 
     int leftIndex = 0;
-    int rightIndex = measurementsArray.getSize();
+    int rightIndex = measurementsArray.size();
 
     while (leftIndex <= rightIndex)
     {

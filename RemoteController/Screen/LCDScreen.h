@@ -12,10 +12,10 @@
 
 #include "../Interfaces/Screen.h"
 #include <LiquidCrystal_I2C.h>
-#include <Task.h>
+#include <IExecutable.h>
 
 
-class LCDScreen : public Interfaces::Screen, public Task
+class LCDScreen : public Interfaces::Screen, public IExecutable
 {
 private:
     static const uint8_t LCD_ADDRESS = 0x3F;
