@@ -11,7 +11,7 @@
 #define DATAPACKETS_H
 
 #include "CommData.h"
-#include "PacketReceivedEvents.h"
+#include "PacketReceivedCallbacks.h"
 #include <DataPacket.h>
 #include <EventPacket.h>
 
@@ -22,72 +22,74 @@
 
 namespace DataPacketClasses
 {
-    class Steering : public DataPacket
+    class Steering : public PacketComm::DataPacket
     {
     public:
-        Steering() : DataPacket(0) {
-            addByteType(commData.pilot.stick.throttle);
-            addByteType(commData.pilot.stick.yaw);
-            addByteType(commData.pilot.stick.pitch);
-            addByteType(commData.pilot.stick.roll);
+        Steering()
+            : DataPacket(0)
+        {
+            addVar(commData.pilot.stick.throttle);
+            addVar(commData.pilot.stick.yaw);
+            addVar(commData.pilot.stick.pitch);
+            addVar(commData.pilot.stick.roll);
         }
     };
 
 
-    class FlightModeChange : public DataPacket
+    class FlightModeChange : public PacketComm::DataPacket
     {
     public:
-        FlightModeChange() : DataPacket(10) {
-            addByteType(commData.flightMode);
+        FlightModeChange()
+            : DataPacket(10)
+        {
+            addVar(commData.flightMode);
         }
     };
 
 
-    class DroneMeasurementsAndState : public DataPacket
+    class DroneMeasurementsAndState : public PacketComm::DataPacket
     {
-        PacketReceivedEvents::DroneMeasurementsAndState recEvent;
-        
     public:
-        DroneMeasurementsAndState() : DataPacket(50) {
-            addByteType(commData.drone.pitchAngle_deg);
-            addByteType(commData.drone.rollAngle_deg);
-            addByteType(commData.drone.heading_deg);
-            addByteType(commData.drone.altitude_cm);
-            addByteType(commData.drone.longitude);
-            addByteType(commData.drone.latitude);
-            addByteType(commData.drone.connectionStability);
+        DroneMeasurementsAndState()
+            : DataPacket(50)
+        {
+            addVar(commData.drone.pitchAngle_deg);
+            addVar(commData.drone.rollAngle_deg);
+            addVar(commData.drone.heading_deg);
+            addVar(commData.drone.altitude_cm);
+            addVar(commData.drone.longitude);
+            addVar(commData.drone.latitude);
+            addVar(commData.drone.connectionStability);
 
-            setPacketReceivedEvent(recEvent);
+            setOnReceiveCallback(PacketReceivedCallbacks::droneMeasurementAndStateCallback);
         }
     };
 
 
-    class PIDTuning : public DataPacket
+    class PIDTuning : public PacketComm::DataPacket
     {
     public:
         PIDTuning() : DataPacket(51) {
-            addByteType(commData.pidTuning.tunedController_ID);
-            addByteType(commData.pidTuning.kP);
-            addByteType(commData.pidTuning.kI);
-            addByteType(commData.pidTuning.kD);
-            addByteType(commData.pidTuning.iMax);
+            addVar(commData.pidTuning.tunedController_ID);
+            addVar(commData.pidTuning.kP);
+            addVar(commData.pidTuning.kI);
+            addVar(commData.pidTuning.kD);
+            addVar(commData.pidTuning.iMax);
         }
     };
 
 
-    class PIDTuningAndroid : public DataPacket
+    class PIDTuningAndroid : public PacketComm::DataPacket
     {
-        PacketReceivedEvents::PIDTuningAndroid recEvent;
-
     public:
         PIDTuningAndroid() : DataPacket(100) {
-            addByteType(commData.pidTuningAndroid.tunedController_ID);
-            addByteType(commData.pidTuningAndroid.kP);
-            addByteType(commData.pidTuningAndroid.kI);
-            addByteType(commData.pidTuningAndroid.kD);
-            addByteType(commData.pidTuningAndroid.iMax);
+            addVar(commData.pidTuningAndroid.tunedController_ID);
+            addVar(commData.pidTuningAndroid.kP);
+            addVar(commData.pidTuningAndroid.kI);
+            addVar(commData.pidTuningAndroid.kD);
+            addVar(commData.pidTuningAndroid.iMax);
 
-            setPacketReceivedEvent(recEvent);
+            setOnReceiveCallback(PacketReceivedCallbacks::pidTuningAndroidCallback);
         }
     };
 }
