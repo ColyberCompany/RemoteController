@@ -9,7 +9,7 @@
 #include "RemoteControllerManager.h"
 #include "Instances.h"
 #include "Screen/LCDScreen.h"
-#include <SimpleTasker.h>
+#include <Tasker.h>
 #include "config.h"
 #include "Enums/BaudRateTypes.h"
 #include "Inputs/ADS1115Handler.h"
@@ -18,7 +18,7 @@
 #include "Inputs/PinAdapter.h"
 #include "Tasks.h"
 #include "ESP8266WiFiComm/ESP8266WiFiComm.cpp" // Including a cpp file was a simplest solution
-#include "PacketCommunicationWithQueue.h"
+#include <PacketCommunication.h>
 #include "StickGestures/ArmingStates.h"
 #include "Communication/CommData.h"
 #include "Communication/DataPackets.h"
@@ -49,13 +49,11 @@ namespace Assemble
 {
     RemoteControllerManager remoteControllerManager;
 
-    // Tasker and TaskPlanner
-    SimpleTasker simpleTasker(Config::MaxSimpleTaskerTasks);
-    TaskPlanner taskPlanner(Config::MaxTaskPlannerTasks);
+    Tasker tasker(Config::MaxSimpleTaskerTasks);
 
     namespace Communication {
-        ESP8266WiFiComm esp8266WiFiComm(Config::WiFiPort, Config::DroneCommMaxBufferSize);
-        PacketCommunicationWithQueue droneComm(&esp8266WiFiComm, Config::DroneCommMaxQueuedBuffers);
+        PacketComm::ESP8266WiFiComm esp8266WiFiComm(Config::WiFiPort, Config::DroneCommMaxBufferSize);
+        PacketComm::PacketCommunication droneComm(&esp8266WiFiComm);
     }
 
     // Screen
@@ -63,7 +61,7 @@ namespace Assemble
 
     // Inputs
     MeasurementsManager measurementsManager;
-    ADS1115Handler ads1115Handler(taskPlanner);
+    ADS1115Handler ads1115Handler;
 
     // Gesture recognition
     Context stickArmingContext;
@@ -91,27 +89,28 @@ namespace Instance
     using namespace Interfaces;
 
     RemoteControllerManager& remoteControllerManager = Assemble::remoteControllerManager;
-    ITasker& tasker = Assemble::simpleTasker;
-    TaskPlanner& taskPlanner = Assemble::taskPlanner;
+    Tasker& tasker = Assemble::tasker;
     Screen& screen = Assemble::lcdScreen;
     MeasurementsManager& measurementsManager = Assemble::measurementsManager;
-    PacketCommunication& droneComm = Assemble::Communication::droneComm;
+    PacketComm::PacketCommunication& droneComm = Assemble::Communication::droneComm;
     //DroneCommManager& droneCommManager = Assemble::droneCommManager;
     Context& stickArmingContext = Assemble::stickArmingContext;
 }
 
 
 
-class : public Task
+class : public IExecutable
+{
+    void execute() override
     {
-        void execute() override
-        {
-            //Serial.println("dziala");
-            //Serial.println(Assemble::ads1115Handler.getRawRoll());
-            //Serial.println(Assemble::pitchADCAdapter.getNewValue());
-            Serial.println(Assemble::Communication::esp8266WiFiComm.getLocalIP());
-        }
-    } debugTask;
+        //Serial.println("dziala");
+        //Serial.println(Assemble::ads1115Handler.getRawRoll());
+        //Serial.println(Assemble::pitchADCAdapter.getNewValue());
+        //Serial.println(Assemble::Communication::esp8266WiFiComm.getLocalIP());
+        //Serial.println(Assemble::tasker.getLoad());
+        //Serial.println(Instance::measurementsManager.getMeasurement())
+    }
+} debugTask;
 
 
 
@@ -158,12 +157,13 @@ void addTasksToTasker()
 {
     using Instance::tasker;
 
-    tasker.addTask(&debugTask, 10);
-    tasker.addTask(&Assemble::lcdScreen, 13);
-    tasker.addTask(&Tasks::updateScreenData, 13);
-    tasker.addTask(&Tasks::stickArmingContext, 15);
-    tasker.addTask(&Tasks::steeringSending, Config::DroneCommSteeringSendingFrequency_Hz);
-    tasker.addTask(&Tasks::droneCommReceiving, Config::DroneCommReceivingFrequency_Hz);
+    tasker.addTask_Hz(&debugTask, 10);
+    tasker.addTask_Hz(&Assemble::lcdScreen, 10);
+    tasker.addTask_Hz(&Tasks::updateScreenData, 10);
+    tasker.addTask_Hz(&Assemble::ads1115Handler, 700, TaskType::NO_CATCHING_UP);
+    tasker.addTask_Hz(&Tasks::stickArmingContext, 15);
+    tasker.addTask_Hz(&Tasks::steeringSending, Config::DroneCommSteeringSendingFrequency_Hz);
+    tasker.addTask_Hz(&Tasks::droneCommReceiving, Config::DroneCommReceivingFrequency_Hz);
 
     // add other tasks...
 }
@@ -210,8 +210,8 @@ void setupCommunication()
     Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 151); // drone WiFi device address
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
-    Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::droneMeasurementsAndState);  
-    Instance::droneComm.addReceiveDataPacketPointer(&DataPackets::pidTuningAndroid);
+    Instance::droneComm.registerReceivePacket(&DataPackets::droneMeasurementsAndState);  
+    Instance::droneComm.registerReceivePacket(&DataPackets::pidTuningAndroid);
     // add other data packets that could be received...
 }
 

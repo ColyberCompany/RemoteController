@@ -16,7 +16,7 @@
 
 class MeasurementsManager
 {
-    GrowingArray<Measurement*> measurementsArray;
+    SimpleDataStructures::GrowingArray<Measurement*> measurementsArray;
     
 public:
     MeasurementsManager();
@@ -40,7 +40,6 @@ public:
 
 
 private:
-    bool addMeasurementInAscendingOrderByType(Measurement* measurement);
     Measurement* binarySearchMeasurementByType(Enums::MeasurementType type);
 };
 

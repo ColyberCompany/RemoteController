@@ -1,26 +1,24 @@
 /**
- * @file PacketReceivedEvents.cpp
+ * @file PacketReceivedCallbacks.cpp
  * @author Jan Wielgus
  * @date 2021-01-07
  * 
  */
 
-#include "../Communication/PacketReceivedEvents.h"
+#include "../Communication/PacketReceivedCallbacks.h"
 #include "../Instances.h"
 #include "../Communication/CommData.h"
 #include "../Communication/DataPackets.h"
 
-using namespace PacketReceivedEvents;
 
-
-void DroneMeasurementsAndState::execute()
+void PacketReceivedCallbacks::droneMeasurementAndStateCallback()
 {
     // TODO: do something when received new data
     // (LCD values update is in the lcd tasker task)
 }
 
 
-void PIDTuningAndroid::execute()
+void PacketReceivedCallbacks::pidTuningAndroidCallback()
 {
     commData.pidTuning.tunedController_ID = commData.pidTuningAndroid.tunedController_ID;
     commData.pidTuning.kP = float(commData.pidTuningAndroid.kP) / 100.f;
@@ -28,5 +26,5 @@ void PIDTuningAndroid::execute()
     commData.pidTuning.kD = float(commData.pidTuningAndroid.kD) / 100.f;
     commData.pidTuning.iMax = (float)commData.pidTuningAndroid.iMax;
 
-    Instance::droneComm.sendDataPacket(&DataPackets::pidTuning);
+    Instance::droneComm.send(&DataPackets::pidTuning);
 }

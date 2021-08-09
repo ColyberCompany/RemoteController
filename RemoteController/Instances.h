@@ -10,8 +10,7 @@
 #define INSTANCES_H
 
 #include "RemoteControllerManager.h"
-#include <ITasker.h>
-#include <TaskPlanner.h>
+#include <Tasker.h>
 #include "Interfaces/Screen.h"
 #include "Inputs/MeasurementsManager.h"
 #include <PacketCommunication.h>
@@ -21,11 +20,10 @@
 namespace Instance
 {
     extern RemoteControllerManager& remoteControllerManager;
-    extern ITasker& tasker;
-    extern TaskPlanner& taskPlanner;
+    extern Tasker& tasker;
     extern Interfaces::Screen& screen;
     extern MeasurementsManager& measurementsManager;
-    extern PacketCommunication& droneComm;
+    extern PacketComm::PacketCommunication& droneComm;
     extern Context& stickArmingContext;
 }
 

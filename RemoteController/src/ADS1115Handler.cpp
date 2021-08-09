@@ -9,10 +9,9 @@
 #include "../config.h"
 
 
-ADS1115Handler::ADS1115Handler(TaskPlanner& _taskPlanner)
-    : taskPlanner(_taskPlanner), ads1115(ADS1115_DEFAULT_ADDRESS)
+ADS1115Handler::ADS1115Handler()
+    : ads1115(ADS1115_DEFAULT_ADDRESS)
 {
-
 }
 
 
@@ -67,8 +66,11 @@ int16_t ADS1115Handler::getRawRoll()
 
 void ADS1115Handler::execute()
 {
-    //ADSMeasurements[currentADSPin] = ads1115.getMilliVolts(false);
-    adsMeasurements[currentADSPin] = ads1115.getConversion();
+    //ads1115.getMilliVolts(false);
+
+    if (ads1115.pollConversion(10))
+        adsMeasurements[currentADSPin] = ads1115.getConversion(false);
+
     triggerNextADSConversion();
 }
 
@@ -95,5 +97,4 @@ void ADS1115Handler::triggerNextADSConversion()
     }
 
     ads1115.triggerConversion();
-    taskPlanner.scheduleTask_us(this, ADSConversionTime_us);
 }

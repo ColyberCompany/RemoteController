@@ -44,6 +44,8 @@ bool LCDScreen::initialize()
     lcd.clear();
 
     fillLinesWithFixedText();
+
+    return true;
 }
 
 

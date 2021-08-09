@@ -52,7 +52,7 @@ public:
             newRawValue = sticksADC.getRawRoll();
             break;
         default:
-            return -2.2f; // ERROR, this should never occure
+            return 0.f; // ERROR, this should never occure
         }
 
         return valueConverter.convert(newRawValue);
