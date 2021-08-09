@@ -10,23 +10,22 @@
 #define ADS1115HANDLER_H
 
 #include "../Interfaces/ControlSticksADC.h"
-#include <Task.h>
-#include <TaskPlanner.h>
+#include <IExecutable.h>
 #include <ADS1115.h>
 
 
-class ADS1115Handler : public Interfaces::ControlSticksADC, public Task
+class ADS1115Handler : public Interfaces::ControlSticksADC, public IExecutable
 {
-    TaskPlanner& taskPlanner; // TODO: rewrite this class using ITasker (like in MS5611 library now)
     ADS1115 ads1115;
 
     uint16_t adsMeasurements[4] = {};
     uint8_t currentADSPin = 0;
 
-    static const uint16_t ADSConversionTime_us = 1164; // 1000000 / RATE   (for RATE = 860)
+public:
+    //static const uint16_t ADSConversionTime_us = 1164; // 1000000 / RATE   (for RATE = 860)
 
 public:
-    ADS1115Handler(TaskPlanner& taskPlanner);
+    ADS1115Handler();
 
     /**
      * @brief Call Wire.begin() outside. Initializes ads1115.
