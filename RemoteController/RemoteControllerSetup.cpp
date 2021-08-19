@@ -78,8 +78,8 @@ namespace Assemble
         ads1115Handler, symmetricStickInitSetup);
     
     // Other measurements
-    DigitalPinAdapter leftSwitch(Enums::MeasurementType::LeftSwitch, Config::LeftSwitchPin);
-    DigitalPinAdapter rightSwitch(Enums::MeasurementType::RightSwitch, Config::RightSwitchPin);
+    DigitalPinAdapter leftSwitch(Enums::MeasurementType::LeftSwitch, Config::LeftSwitchPin, true);
+    DigitalPinAdapter rightSwitch(Enums::MeasurementType::RightSwitch, Config::RightSwitchPin, true);
     Esp8266WiFiStateMeasurementAdapter esp8266WiFiStateMeasurementAdapter;
 }
 
@@ -159,7 +159,6 @@ void addTasksToTasker()
 
     tasker.addTask_Hz(&debugTask, 10);
     tasker.addTask_Hz(&Assemble::lcdScreen, 10);
-    tasker.addTask_Hz(&Tasks::updateScreenData, 10);
     tasker.addTask_Hz(&Assemble::ads1115Handler, 700, TaskType::NO_CATCHING_UP);
     tasker.addTask_Hz(&Tasks::stickArmingContext, 15);
     tasker.addTask_Hz(&Tasks::steeringSending, Config::DroneCommSteeringSendingFrequency_Hz);

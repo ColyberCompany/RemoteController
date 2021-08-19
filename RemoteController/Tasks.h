@@ -11,41 +11,12 @@
 
 #include <IExecutable.h>
 #include "Instances.h"
-#include "Common/ScreenData.h"
 #include "Communication/CommData.h"
 #include "Communication/DataPackets.h"
 
 
 namespace Tasks
 {
-
-    class : public IExecutable
-    {
-        void execute() override
-        {
-            using Instance::measurementsManager;
-            using Enums::MeasurementType;
-            
-            ScreenData& screenData = *Instance::screen.getScreenDataPointer();
-
-            screenData.stickThrottle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
-            screenData.stickYaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
-            screenData.stickPitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
-            screenData.stickRoll = measurementsManager.getMeasurement(MeasurementType::RollStick);
-
-            screenData.leftSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::LeftSwitch);
-            screenData.rightSwitchState = !(bool)measurementsManager.getMeasurement(MeasurementType::RightSwitch);
-
-            screenData.flightMode = Instance::remoteControllerManager.getCurrentFlightModeType();
-
-            screenData.droneConnectionState = (bool)measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState);
-
-            screenData.dronePitch = commData.drone.pitchAngle_deg;
-            screenData.droneRoll = commData.drone.rollAngle_deg;
-        }
-    } updateScreenData;
-
-
     class : public IExecutable
     {
         void execute() override
@@ -88,6 +59,22 @@ namespace Tasks
             Instance::droneComm.receive();
         }
     } droneCommReceiving;
+
+
+
+    class : public IExecutable
+    {
+        bool lastRightStickState = false;
+
+        void execute() override
+        {
+            bool rightStickState = Instance::measurementsManager.getMeasurement(Enums::MeasurementType::RightSwitch) == 1.f;
+            if (!lastRightStickState && rightStickState)
+                Instance::remoteControllerManager.setFlightMode(Enums::FlightModeTypes::ALT_HOLD);
+            else if (lastRightStickState && !rightStickState)
+                Instance::remoteControllerManager.setFlightMode(Enums::FlightModeTypes::STABILIZE);
+        }
+    } changeWatcher;
 }
 
 

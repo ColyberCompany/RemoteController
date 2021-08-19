@@ -44,10 +44,14 @@ public:
 
 class DigitalPinAdapter : public PinAdapter
 {
+    bool invert_flag;
+
 public:
-    DigitalPinAdapter(Enums::MeasurementType measurementType, uint8_t digitalPin)
+    DigitalPinAdapter(Enums::MeasurementType measurementType, uint8_t digitalPin, bool invert = false)
         : PinAdapter(measurementType, digitalPin)
-    {}
+    {
+        invert_flag = invert;
+    }
 
     /**
      * @brief Have to be called before the first reading.
@@ -60,7 +64,8 @@ public:
 
     float getNewValue() override
     {
-        return (float)digitalRead(pin);
+        bool pinState = digitalRead(pin);
+        return invert_flag ? !pinState : pinState;
     }
 };
 

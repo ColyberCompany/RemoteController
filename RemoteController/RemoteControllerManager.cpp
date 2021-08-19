@@ -15,16 +15,6 @@ using Enums::FlightModeTypes;
 using Enums::StateType;
 
 
-void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
-{
-    currentFlightMode = flightModeType;
-    
-    commData.flightMode = (uint8_t)currentFlightMode;
-
-    Instance::droneComm.send(&DataPackets::flightModeChange);
-}
-
-
 bool RemoteControllerManager::isArmed()
 {
     return currentFlightMode == FlightModeTypes::UNARMED ? false : true;
@@ -34,4 +24,16 @@ bool RemoteControllerManager::isArmed()
 FlightModeTypes RemoteControllerManager::getCurrentFlightModeType()
 {
     return currentFlightMode;
+}
+
+
+void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
+{
+    currentFlightMode = flightModeType;
+    
+    commData.flightMode = (uint8_t)currentFlightMode;
+
+    Instance::droneComm.send(&DataPackets::flightModeChange);
+    Serial.println("fm change");
+    Serial.println((int)flightModeType);
 }
