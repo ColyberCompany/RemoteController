@@ -30,22 +30,19 @@ private:
     char line1[Cols + 1];
     char line2[Cols + 1];
 
-    ScreenData screenData;
-
 public:
     LCDScreen();
     ~LCDScreen();
 
     bool initialize() override;
     void execute() override;
-    ScreenData* getScreenDataPointer() override;
 
 
 private:
     /**
      * @brief Update line1 and line2 textx with data from screenData.
      */
-    void updateLinesFromScreenData();
+    void updateLines();
 
     /**
      * @brief Put to line1 and line2 all things that won't change

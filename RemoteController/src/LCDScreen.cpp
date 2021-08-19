@@ -6,6 +6,8 @@
  */
 
 #include "../Screen/LCDScreen.h"
+#include "../Instances.h"
+#include "../Communication/CommData.h"
 
 
 const char LCDScreen::FlightModesLabels[][5] = {"||||", "stab", "alth", "posh"};
@@ -51,47 +53,43 @@ bool LCDScreen::initialize()
 
 void LCDScreen::execute()
 {
-    updateLinesFromScreenData();
+    updateLines();
     printLines();
 }
 
 
-ScreenData* LCDScreen::getScreenDataPointer()
+void LCDScreen::updateLines()
 {
-    return &screenData;
-}
+    using Instance::measurementsManager;
+    using Enums::MeasurementType;
 
-
-void LCDScreen::updateLinesFromScreenData()
-{
     updateText(line1, 0, ' ', 3); // clear old throttle value
-    updateText(line1, 0, screenData.stickThrottle / 10);
-    updateText(line1, 3, stickValToSymbolHorizontal(screenData.stickYaw));
-    updateText(line1, 4, stickValToSymbolVertical(screenData.stickPitch));
-    updateText(line1, 5, stickValToSymbolHorizontal(screenData.stickRoll));
+    updateText(line1, 0, (int16_t)measurementsManager.getMeasurement(MeasurementType::ThrottleStick) / 10);
+    updateText(line1, 3, stickValToSymbolHorizontal(measurementsManager.getMeasurement(MeasurementType::YawStick)));
+    updateText(line1, 4, stickValToSymbolVertical(measurementsManager.getMeasurement(MeasurementType::PitchStick)));
+    updateText(line1, 5, stickValToSymbolHorizontal(measurementsManager.getMeasurement(MeasurementType::RollStick)));
 
     // drone angles
     updateText(line1, 7, ' ', 3);
-    updateText(line1, 7, screenData.dronePitch);
+    updateText(line1, 7, commData.drone.pitchAngle_deg);
 
-    updateText(line1, 12, boolStateToSymbol(screenData.leftSwitchState));
-    updateText(line1, 13, boolStateToSymbol(screenData.rightSwitchState));
+    updateText(line1, 12, boolStateToSymbol(measurementsManager.getMeasurement(MeasurementType::LeftSwitch)));
+    updateText(line1, 13, boolStateToSymbol(measurementsManager.getMeasurement(MeasurementType::RightSwitch)));
 
-    updateText(line1, 15, boolStateToSymbol(screenData.droneConnectionState));
+    updateText(line1, 15, boolStateToSymbol(measurementsManager.getMeasurement(MeasurementType::ESP8266WiFiState)));
 
-    // flight mode
-    switch (screenData.flightMode)
+    auto curFlightMode = Instance::remoteControllerManager.getCurrentFlightModeType();
+    switch (curFlightMode)
     {
         case Enums::FlightModeTypes::UNARMED:
         case Enums::FlightModeTypes::STABILIZE:
         case Enums::FlightModeTypes::ALT_HOLD:
         case Enums::FlightModeTypes::POS_HOLD:
-            updateText(line2, 0, FlightModesLabels[(int)screenData.flightMode]);
+            updateText(line2, 0, FlightModesLabels[(int)curFlightMode]);
             break;
         default:
             updateText(line2, 0, UnknownFlightModeLabel);
     }
-
 
     // update other data here...
 }

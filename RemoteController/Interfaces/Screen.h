@@ -9,8 +9,6 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "../Common/ScreenData.h"
-
 
 namespace Interfaces
 {
@@ -20,7 +18,6 @@ namespace Interfaces
         virtual ~Screen() {}
 
         virtual bool initialize() = 0;
-        virtual ScreenData* getScreenDataPointer() = 0;
     };
 }
 
