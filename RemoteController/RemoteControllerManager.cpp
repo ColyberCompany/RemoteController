@@ -34,6 +34,4 @@ void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
     commData.flightMode = (uint8_t)currentFlightMode;
 
     Instance::droneComm.send(&DataPackets::flightModeChange);
-    Serial.println("fm change");
-    Serial.println((int)flightModeType);
 }

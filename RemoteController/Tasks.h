@@ -69,10 +69,16 @@ namespace Tasks
         void execute() override
         {
             bool rightStickState = Instance::measurementsManager.getMeasurement(Enums::MeasurementType::RightSwitch) == 1.f;
-            if (!lastRightStickState && rightStickState)
-                Instance::remoteControllerManager.setFlightMode(Enums::FlightModeTypes::ALT_HOLD);
-            else if (lastRightStickState && !rightStickState)
-                Instance::remoteControllerManager.setFlightMode(Enums::FlightModeTypes::STABILIZE);
+            
+            if (Instance::remoteControllerManager.getCurrentFlightModeType() != Enums::FlightModeTypes::UNARMED)
+            {
+                if (!lastRightStickState && rightStickState)
+                    Instance::remoteControllerManager.setFlightMode(Enums::FlightModeTypes::ALT_HOLD);
+                else if (lastRightStickState && !rightStickState)
+                    Instance::remoteControllerManager.setFlightMode(Enums::FlightModeTypes::STABILIZE);
+            }
+
+            lastRightStickState = rightStickState;
         }
     } changeWatcher;
 }

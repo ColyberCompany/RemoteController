@@ -161,6 +161,7 @@ void addTasksToTasker()
     tasker.addTask_Hz(&Assemble::lcdScreen, 10);
     tasker.addTask_Hz(&Assemble::ads1115Handler, 700, TaskType::NO_CATCHING_UP);
     tasker.addTask_Hz(&Tasks::stickArmingContext, 15);
+    tasker.addTask_Hz(&Tasks::changeWatcher, 4);
     tasker.addTask_Hz(&Tasks::steeringSending, Config::DroneCommSteeringSendingFrequency_Hz);
     tasker.addTask_Hz(&Tasks::droneCommReceiving, Config::DroneCommReceivingFrequency_Hz);
 
