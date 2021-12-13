@@ -61,7 +61,44 @@ namespace DataPacketClasses
             addVar(commData.drone.latitude);
             addVar(commData.drone.connectionStability);
 
+            addVar(commData.drone.pitch);
+            addVar(commData.drone.roll);
+            addVar(commData.drone.accX);
+            addVar(commData.drone.accY);
+            addVar(commData.drone.accZ);
+            addVar(commData.drone.gyroX);
+            addVar(commData.drone.gyroY);
+            addVar(commData.drone.gyroZ);
+            addVar(commData.drone.magnX);
+            addVar(commData.drone.magnY);
+            addVar(commData.drone.magnZ);
+
             setOnReceiveCallback(PacketReceivedCallbacks::droneMeasurementAndStateCallback);
+        }
+    };
+
+
+    class AndroidAppData : public PacketComm::DataPacket
+    {
+    public:
+        AndroidAppData()
+            : DataPacket(69)
+        {
+            addVar(commData.androidApp.pitch);
+            addVar(commData.androidApp.roll);
+            addVar(commData.androidApp.heading);
+            addVar(commData.androidApp.altitude);
+            addVar(commData.androidApp.latitude);
+            addVar(commData.androidApp.longitude);
+            addVar(commData.androidApp.accX);
+            addVar(commData.androidApp.accY);
+            addVar(commData.androidApp.accZ);
+            addVar(commData.androidApp.gyroX);
+            addVar(commData.androidApp.gyroY);
+            addVar(commData.androidApp.gyroZ);
+            addVar(commData.androidApp.magnX);
+            addVar(commData.androidApp.magnY);
+            addVar(commData.androidApp.magnZ);
         }
     };
 
@@ -103,6 +140,8 @@ namespace DataPackets
     extern DataPacketClasses::DroneMeasurementsAndState droneMeasurementsAndState;
     extern DataPacketClasses::PIDTuning pidTuning;
     extern DataPacketClasses::PIDTuningAndroid pidTuningAndroid;
+
+    extern DataPacketClasses::AndroidAppData androidAppData;
 }
 
 

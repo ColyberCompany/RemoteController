@@ -23,6 +23,8 @@
 #include "Communication/CommData.h"
 #include "Communication/DataPackets.h"
 
+#include "tempChangeIPFunc.h"
+
 
 // Helper functions
 void addTasksToTasker();
@@ -81,6 +83,14 @@ namespace Assemble
     DigitalPinAdapter leftSwitch(Enums::MeasurementType::LeftSwitch, Config::LeftSwitchPin, true);
     DigitalPinAdapter rightSwitch(Enums::MeasurementType::RightSwitch, Config::RightSwitchPin, true);
     Esp8266WiFiStateMeasurementAdapter esp8266WiFiStateMeasurementAdapter;
+}
+
+
+void tempSetIPToDrone() {
+    Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 151); // drone WiFi device address
+}
+void tempSetIPToAndroidApp() {
+    Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 1);
 }
 
 

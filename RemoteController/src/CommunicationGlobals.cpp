@@ -23,4 +23,6 @@ namespace DataPackets
     PIDTuning pidTuning;
     PIDTuningAndroid pidTuningAndroid;
     // all other data packets...
+
+    AndroidAppData androidAppData;
 }
