@@ -11,8 +11,8 @@
 
 #include "Measurement.h"
 #include "AnalogToControlStick.h"
-#include "../Interfaces/ControlSticksADC.h"
-#include "../Enums/MeasurementType.h"
+#include "Interfaces/ControlSticksADC.h"
+#include "Enums/MeasurementType.h"
 
 class ControlStickADCAdapter : public Measurement
 {

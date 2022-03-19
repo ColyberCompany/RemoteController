@@ -5,10 +5,10 @@
  * 
  */
 
-#include "../Communication/PacketReceivedCallbacks.h"
-#include "../Instances.h"
-#include "../Communication/CommData.h"
-#include "../Communication/DataPackets.h"
+#include "Communication/PacketReceivedCallbacks.h"
+#include "Instances.h"
+#include "Communication/CommData.h"
+#include "Communication/DataPackets.h"
 
 
 void PacketReceivedCallbacks::droneMeasurementAndStateCallback()

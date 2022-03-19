@@ -10,7 +10,7 @@
 #ifndef LCDSCREEN_H
 #define LCDSCREEN_H
 
-#include "../Interfaces/Screen.h"
+#include "Interfaces/Screen.h"
 #include <LiquidCrystal_I2C.h>
 #include <IExecutable.h>
 
@@ -89,7 +89,7 @@ private:
      * @param howManyTimes eg. if 1 - only replace char at position,
      * if 2 - replace char at position and at the next position, etc.
      */
-    void updateText(char* outputText, size_t position, char character, int howManyTimes = 1);
+    void updateText(char* outputText, size_t position, char character, uint16_t howManyTimes = 1);
 
     /**
      * @brief Update outputText with whole C style string starting from position index.

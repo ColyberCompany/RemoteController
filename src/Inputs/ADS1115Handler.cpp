@@ -5,8 +5,8 @@
  * 
  */
 
-#include "../Inputs/ADS1115Handler.h"
-#include "../config.h"
+#include "Inputs/ADS1115Handler.h"
+#include "config.h"
 
 
 ADS1115Handler::ADS1115Handler()

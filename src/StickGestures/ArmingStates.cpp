@@ -5,9 +5,9 @@
  * 
  */
 
-#include "../StickGestures/ArmingStates.h"
+#include "StickGestures/ArmingStates.h"
 #include <Context.h>
-#include "../Instances.h"
+#include "Instances.h"
 
 
 

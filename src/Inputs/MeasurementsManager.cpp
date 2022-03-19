@@ -6,7 +6,7 @@
  * 
  */
 
-#include "../Inputs/MeasurementsManager.h"
+#include "Inputs/MeasurementsManager.h"
 
 using Enums::MeasurementType;
 

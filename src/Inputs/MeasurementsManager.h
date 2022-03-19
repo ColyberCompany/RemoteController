@@ -11,7 +11,7 @@
 
 #include <GrowingArray.h>
 #include "Measurement.h"
-#include "../Enums/MeasurementType.h"
+#include "Enums/MeasurementType.h"
 
 
 class MeasurementsManager
