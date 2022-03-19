@@ -9,7 +9,7 @@
 #ifndef MEASUREMENT_H
 #define MEASUREMENT_H
 
-#include "../Enums/MeasurementType.h"
+#include "Enums/MeasurementType.h"
 
 
 class Measurement

@@ -5,9 +5,9 @@
  * 
  */
 
-#include "../Screen/LCDScreen.h"
-#include "../Instances.h"
-#include "../Communication/CommData.h"
+#include "Screen/LCDScreen.h"
+#include "Instances.h"
+#include "Communication/CommData.h"
 
 
 const char LCDScreen::FlightModesLabels[][5] = {"||||", "stab", "alth", "posh"};
@@ -169,7 +169,7 @@ void LCDScreen::updateText(char* outputText, size_t position, int value, bool al
 }
 
 
-void LCDScreen::updateText(char* outputText, size_t position, char character, int howManyTimes)
+void LCDScreen::updateText(char* outputText, size_t position, char character, uint16_t howManyTimes)
 {
     if (outputText == nullptr)
         return;

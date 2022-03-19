@@ -9,7 +9,7 @@
 #ifndef ADS1115HANDLER_H
 #define ADS1115HANDLER_H
 
-#include "../Interfaces/ControlSticksADC.h"
+#include "Interfaces/ControlSticksADC.h"
 #include <IExecutable.h>
 #include <ADS1115.h>
 

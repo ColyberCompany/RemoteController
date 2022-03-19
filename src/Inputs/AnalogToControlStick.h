@@ -10,8 +10,8 @@
 #ifndef ANALOGTOCONTROLSTICK_H
 #define ANALOGTOCONTROLSTICK_H
 
-#include "../Common/Mapper.h"
-#include "../utils.h"
+#include "Common/Mapper.h"
+#include "utils.h"
 
 // TODO: refactor this class
 

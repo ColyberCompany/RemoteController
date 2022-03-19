@@ -10,7 +10,7 @@
 #ifndef STICKSSTATE_H
 #define STICKSSTATE_H
 
-#include "../Common/ControlSticks.h"
+#include "Common/ControlSticks.h"
 #include <State.h>
 
 

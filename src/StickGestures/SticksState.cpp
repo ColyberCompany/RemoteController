@@ -5,9 +5,9 @@
  * 
  */
 
-#include "../StickGestures/SticksState.h"
-#include "../Instances.h"
-#include "../Inputs/MeasurementsManager.h"
+#include "StickGestures/SticksState.h"
+#include "Instances.h"
+#include "Inputs/MeasurementsManager.h"
 
 
 SticksState::SticksState(Context* context)
