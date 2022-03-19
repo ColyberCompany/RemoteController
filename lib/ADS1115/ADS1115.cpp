@@ -606,11 +606,11 @@ uint16_t getValueFromBits(uint16_t extractFrom, int high, int length) {
 /** Show all the config register settings
  */
 void ADS1115::showConfigRegister() {
-    I2Cdev::readWord(devAddr, ADS1115_RA_CONFIG, buffer);
-    uint16_t configRegister =buffer[0];    
-    
+    I2Cdev::readWord(devAddr, ADS1115_RA_CONFIG, buffer);   
     
     #ifdef ADS1115_SERIAL_DEBUG
+      uint16_t configRegister =buffer[0]; 
+
       Serial.print("Register is:");
       Serial.println(configRegister,BIN);
   
