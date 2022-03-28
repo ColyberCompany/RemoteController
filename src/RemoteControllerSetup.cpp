@@ -207,7 +207,7 @@ void setupCommunication()
 {
     WiFi.mode(WIFI_STA);
     WiFi.begin(Config::WiFiSSID, Config::WiFiPassword);
-    Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 151); // drone WiFi device address
+    Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 145); // drone WiFi device address
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
     Instance::droneComm.registerReceivePacket(&DataPackets::droneMeasurementsAndState);  

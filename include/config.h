@@ -29,7 +29,7 @@ namespace Config
 
     const size_t DroneCommMaxBufferSize = 40;
     const uint16_t DroneCommReceivingFrequency_Hz = 20; // TODO: set receiving frequency
-    const uint16_t DroneCommSteeringSendingFrequency_Hz = 200; // TODO: set steering sending frequency
+    const uint16_t DroneCommSteeringSendingFrequency_Hz = 20;
 
     const uint8_t LeftSwitchPin = D8;
     const uint8_t RightSwitchPin = D7;
