@@ -61,6 +61,15 @@ struct CommData
     } flightModeChange;
 
     // uint8_t signalLostScenario; // read todo below (probably in a drone code)
+
+
+    struct {
+        uint8_t tunedController_ID;
+        int32_t kP;
+        int32_t kI;
+        int32_t kD;
+        int32_t iMax;
+    } androidPIDTuning;
 };
 
 extern CommData commData;

@@ -12,7 +12,9 @@
 
 namespace PacketReceivedCallbacks
 {
-    void droneMeasurementAndStateCallback();
+    void droneMeasurementsCallback();
+    void droneStateCallback();
+    
     void pidTuningAndroidCallback();
 
     // callbacks for other data packets...
