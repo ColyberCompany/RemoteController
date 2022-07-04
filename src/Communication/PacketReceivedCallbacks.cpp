@@ -20,11 +20,11 @@ void PacketReceivedCallbacks::droneMeasurementsCallback()
 
 void PacketReceivedCallbacks::droneStateCallback()
 {
-    
+
 }
 
 
-void PacketReceivedCallbacks::pidTuningAndroidCallback()
+void PacketReceivedCallbacks::androidPidTuningCallback()
 {
     const auto& input = commData.androidPIDTuning;
     auto& output = commData.pidTuning;

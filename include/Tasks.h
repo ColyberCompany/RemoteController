@@ -34,16 +34,18 @@ namespace Tasks
             using Instance::measurementsManager;
             using Enums::MeasurementType;
 
-            commData.pilot.stick.throttle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
-            commData.pilot.stick.yaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
-            commData.pilot.stick.pitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
-            commData.pilot.stick.roll = measurementsManager.getMeasurement(MeasurementType::RollStick);
+            auto& data = commData.steering;
 
-            if (commData.pilot.stick.throttle < 10)
+            data.throttle = measurementsManager.getMeasurement(MeasurementType::ThrottleStick);
+            data.yaw = measurementsManager.getMeasurement(MeasurementType::YawStick);
+            data.pitch = measurementsManager.getMeasurement(MeasurementType::PitchStick);
+            data.roll = measurementsManager.getMeasurement(MeasurementType::RollStick);
+
+            if (data.throttle < 10)
             {
-                commData.pilot.stick.yaw = 0;
-                commData.pilot.stick.pitch = 0;
-                commData.pilot.stick.roll = 0;
+                data.yaw = 0;
+                data.pitch = 0;
+                data.roll = 0;
             }
 
             Instance::droneComm.send(&DataPackets::steering);

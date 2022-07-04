@@ -31,7 +31,8 @@ void RemoteControllerManager::setFlightMode(FlightModeTypes flightModeType)
 {
     currentFlightMode = flightModeType;
     
-    commData.flightMode = (uint8_t)currentFlightMode;
-
+    commData.flightModeChange.flightMode = (uint8_t)currentFlightMode;
     Instance::droneComm.send(&DataPackets::flightModeChange);
+    Instance::droneComm.send(&DataPackets::flightModeChange);
+    Instance::droneComm.send(&DataPackets::flightModeChange); // send 3 times for certanity
 }

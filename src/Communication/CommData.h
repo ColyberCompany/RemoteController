@@ -70,6 +70,10 @@ struct CommData
         int32_t kD;
         int32_t iMax;
     } androidPIDTuning;
+
+    struct {
+        // TODO: implement
+    } androidDroneData;
 };
 
 extern CommData commData;
