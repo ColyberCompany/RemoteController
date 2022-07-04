@@ -32,8 +32,8 @@ namespace Config
 
     CI uint16_t ControlSticksInputOffset = 450;
 
-    CI char* const WiFiSSID = "HUAWEI_P_smart";
-	CI char* const WiFiPassword = "22222222";
+    CI const char* const WiFiSSID = "HUAWEI_P_smart";
+	CI const char* const WiFiPassword = "22222222";
 	CI uint16_t WiFiPort = 8888;
 }
 
