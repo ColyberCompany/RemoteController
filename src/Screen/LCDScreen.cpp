@@ -71,7 +71,7 @@ void LCDScreen::updateLines()
 
     // drone angles
     updateText(line1, 7, ' ', 3);
-    updateText(line1, 7, commData.drone.pitchAngle_deg);
+    updateText(line1, 7, commData.droneMeasurements.anglePitch);
 
     updateText(line1, 12, boolStateToSymbol(measurementsManager.getMeasurement(MeasurementType::LeftSwitch)));
     updateText(line1, 13, boolStateToSymbol(measurementsManager.getMeasurement(MeasurementType::RightSwitch)));

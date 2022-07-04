@@ -17,7 +17,7 @@
 #include "Inputs/AnalogToControlStick.h"
 #include "Inputs/PinAdapter.h"
 #include "Tasks.h"
-#include "ESP8266WiFiComm/ESP8266WiFiComm.cpp" // Including a cpp file was a simplest solution
+#include "LowLevelImpl/ESP8266WiFiComm.h"
 #include <PacketCommunication.h>
 #include "StickGestures/ArmingStates.h"
 #include "Communication/CommData.h"
@@ -210,8 +210,10 @@ void setupCommunication()
     Assemble::Communication::esp8266WiFiComm.setTargetIPAddress(192, 168, 43, 145); // drone WiFi device address
     Instance::droneComm.adaptConnStabilityToFrequency(Config::DroneCommReceivingFrequency_Hz);
 
-    Instance::droneComm.registerReceivePacket(&DataPackets::droneMeasurementsAndState);  
-    Instance::droneComm.registerReceivePacket(&DataPackets::pidTuningAndroid);
+    Instance::droneComm.registerReceivePacket(&DataPackets::droneMeasurements);
+    Instance::droneComm.registerReceivePacket(&DataPackets::droneState);
+    
+    Instance::droneComm.registerReceivePacket(&DataPackets::androidPIDTuning);
     // add other data packets that could be received...
 }
 
